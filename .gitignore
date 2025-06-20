@@ -1,0 +1,36 @@
+# macOS
+.DS_Store
+*.plist
+
+# Swift
+/.build
+/Packages
+xcuserdata/
+DerivedData/
+.swiftpm/
+Package.resolved
+*.xcodeproj
+*.xcworkspace
+
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.netrc
+
+# Swiftlings specific
+.swiftlings-state.json
+.swiftlings-backup/
+
+# Temporary files
+*.tmp
+*.bak
+*.log
+
+# Reference materials
+rustlings/
+
+# Claude configuration
+.claude/
