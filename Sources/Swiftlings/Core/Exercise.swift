@@ -25,11 +25,6 @@ struct Exercise: Codable, Equatable {
         "Exercises/\(dir)/\(name).swift"
     }
     
-    /// Computed property for the solution file path
-    var solutionPath: String {
-        "Solutions/\(dir)/\(name).swift"
-    }
-    
     private enum CodingKeys: String, CodingKey {
         case name
         case dir

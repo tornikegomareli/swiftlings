@@ -23,6 +23,7 @@ Package.resolved
 # Swiftlings specific
 .swiftlings-state.json
 .swiftlings-backup/
+Solutions/
 
 # Temporary files
 *.tmp
