@@ -4,10 +4,80 @@
   "final_message": "🎉 Congratulations! You've completed all Swiftlings exercises!\n\nWe hope you enjoyed learning about Swift!\nIf you noticed any issues, don't hesitate to report them on GitHub.\nYou can also contribute your own exercises to help the community!",
   "exercises": [
     {
-      "name": "basics1",
+      "name": "intro1",
       "dir": "00_basics",
       "test": false,
-      "hint": "This is a simple Hello World program. Make sure the print statement is correct!",
+      "hint": "This exercise compiles successfully! Remove the 'I AM NOT DONE' comment to continue.",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "intro2",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Swift uses 'print()' not 'println()'. The 'ln' part is automatic!",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "variables1",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Variables in Swift are declared with 'var' keyword. Try: var x = 5",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "variables2",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "The 'let' keyword creates constants that cannot be changed. Use 'var' for values that need to change!",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "variables3",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Use 'let' for values that won't change (like pi), and 'var' for values that will change (like radius).",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "types1",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "String for text, Int for whole numbers, Double for decimal numbers. Match the type to the value!",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "types2",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Add a type annotation like 'let temperature: Double' or use a decimal initial value like '100.0'",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "operators1",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Remember: + for addition, - for subtraction, * for multiplication, / for division, % for remainder",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "operators2",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Use >= for 'greater than or equal', && for 'and', || for 'or'. For ranges, combine conditions with &&",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "strings1",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Use \\(variableName) inside strings for interpolation. For concatenation, use the + operator.",
+      "skip_check_unsolved": true
+    },
+    {
+      "name": "strings2",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "Multi-line strings use triple quotes \"\"\" at the start and end. Use \\ for escape sequences like \\\" and \\n",
       "skip_check_unsolved": true
     }
   ]
