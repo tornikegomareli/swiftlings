@@ -29,6 +29,14 @@ Package.resolved
 *.bak
 *.log
 
+# Compilation artifacts
+*.o
+*.d
+*.swiftdeps
+*.swiftmodule
+*.swiftsourceinfo
+exercise
+
 # Reference materials
 rustlings/
 

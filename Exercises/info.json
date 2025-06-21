@@ -1,0 +1,14 @@
+{
+  "format_version": 1,
+  "welcome_message": "Welcome to Swiftlings! 🦉\n\nIs this your first time? Don't worry, Swiftlings is made for beginners!\nWe are going to teach you a lot of things about Swift, but before we can\nget started, here are some notes about how Swiftlings operates:\n\n1. The central concept behind Swiftlings is that you solve exercises. These\n   exercises usually contain some compiler or logic errors which cause the\n   exercise to fail compilation or testing. It's your job to find all errors\n   and fix them!\n2. Make sure to have your editor open in the project directory. Swiftlings\n   will show you the path of the current exercise. Open the exercise file\n   in your editor, fix errors and save the file. Swiftlings will automatically\n   detect the file change and rerun the exercise.\n3. If you're stuck on an exercise, enter 'h' to show a hint.\n4. Have fun learning Swift!",
+  "final_message": "🎉 Congratulations! You've completed all Swiftlings exercises!\n\nWe hope you enjoyed learning about Swift!\nIf you noticed any issues, don't hesitate to report them on GitHub.\nYou can also contribute your own exercises to help the community!",
+  "exercises": [
+    {
+      "name": "basics1",
+      "dir": "00_basics",
+      "test": false,
+      "hint": "This is a simple Hello World program. Make sure the print statement is correct!",
+      "skip_check_unsolved": true
+    }
+  ]
+}
