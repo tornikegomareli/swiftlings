@@ -25,6 +25,24 @@ class ExerciseRunner {
         return !content.contains("I AM NOT DONE")
     }
     
+    /// Remove "I AM NOT DONE" marker from the exercise file
+    func removeDoneMarker() throws {
+        let fullPath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
+            .appendingPathComponent(exercise.filePath)
+        
+        guard var content = try? String(contentsOf: fullPath) else {
+            return
+        }
+        
+        // Remove the line containing "I AM NOT DONE"
+        let lines = content.components(separatedBy: .newlines)
+        let filteredLines = lines.filter { !$0.contains("I AM NOT DONE") }
+        content = filteredLines.joined(separator: "\n")
+        
+        // Write back to file
+        try content.write(to: fullPath, atomically: true, encoding: .utf8)
+    }
+    
     /// Run the exercise
     func run() throws -> ExerciseResult {
         // First check if the exercise is marked as done

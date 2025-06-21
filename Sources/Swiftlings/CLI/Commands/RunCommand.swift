@@ -49,6 +49,13 @@ struct RunCommand: ParsableCommand {
                     print("Output:")
                     print(output)
                 }
+                
+                // Automatically remove "I AM NOT DONE" marker if it exists
+                if !runner.checkIfDone() {
+                    try? runner.removeDoneMarker()
+                    Terminal.info("✓ Automatically removed 'I AM NOT DONE' marker")
+                }
+                
                 Terminal.success("Exercise \(exerciseToRun.name) completed successfully!")
                 
                 // Mark as completed
