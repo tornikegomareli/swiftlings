@@ -17,9 +17,6 @@ struct Exercise: Codable, Equatable {
     /// Optional dependencies - exercises that should be completed before this one
     let dependencies: [String]?
     
-    /// Whether to skip checking if the exercise is unsolved (for intro exercises)
-    let skipCheckUnsolved: Bool?
-    
     /// Computed property for the full file path
     var filePath: String {
         "Exercises/\(dir)/\(name).swift"
@@ -31,6 +28,5 @@ struct Exercise: Codable, Equatable {
         case test
         case hint
         case dependencies
-        case skipCheckUnsolved = "skip_check_unsolved"
     }
 }
