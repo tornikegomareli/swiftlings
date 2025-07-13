@@ -6,67 +6,56 @@
     {
       "name": "intro1",
       "dir": "00_basics",
-      "test": false,
       "hint": "This exercise compiles successfully! Run it to see the output."
     },
     {
       "name": "intro2",
       "dir": "00_basics",
-      "test": false,
       "hint": "Swift uses 'print()' not 'println()'. The 'ln' part is automatic!"
     },
     {
       "name": "variables1",
       "dir": "00_basics",
-      "test": false,
       "hint": "Variables in Swift are declared with 'var' keyword. Try: var x = 5"
     },
     {
       "name": "variables2",
       "dir": "00_basics",
-      "test": false,
       "hint": "The 'let' keyword creates constants that cannot be changed. Use 'var' for values that need to change!"
     },
     {
       "name": "variables3",
       "dir": "00_basics",
-      "test": false,
       "hint": "Use 'let' for values that won't change (like pi), and 'var' for values that will change (like radius)."
     },
     {
       "name": "types1",
       "dir": "00_basics",
-      "test": false,
       "hint": "String for text, Int for whole numbers, Double for decimal numbers. Match the type to the value!"
     },
     {
       "name": "types2",
       "dir": "00_basics",
-      "test": false,
       "hint": "Add a type annotation like 'let temperature: Double' or use a decimal initial value like '100.0'"
     },
     {
       "name": "operators1",
       "dir": "00_basics",
-      "test": false,
       "hint": "Remember: + for addition, - for subtraction, * for multiplication, / for division, % for remainder"
     },
     {
       "name": "operators2",
       "dir": "00_basics",
-      "test": false,
       "hint": "Use >= for 'greater than or equal', && for 'and', || for 'or'. For ranges, combine conditions with &&"
     },
     {
       "name": "strings1",
       "dir": "00_basics",
-      "test": false,
       "hint": "Use \\(variableName) inside strings for interpolation. For concatenation, use the + operator."
     },
     {
       "name": "strings2",
       "dir": "00_basics",
-      "test": false,
       "hint": "Multi-line strings use triple quotes \"\"\" at the start and end. Use \\ for escape sequences like \\\" and \\n"
     }
   ]
