@@ -8,9 +8,6 @@ struct Exercise: Codable, Equatable {
     /// Directory category (e.g., "00_intro", "01_variables")
     let dir: String
     
-    /// Whether this exercise should be run as a test or just compiled
-    let test: Bool
-    
     /// Hint text to help the user solve the exercise
     let hint: String
     
@@ -25,7 +22,6 @@ struct Exercise: Codable, Equatable {
     private enum CodingKeys: String, CodingKey {
         case name
         case dir
-        case test
         case hint
         case dependencies
     }
