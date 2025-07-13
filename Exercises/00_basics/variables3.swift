@@ -7,10 +7,10 @@
 
 func calculateCircleArea() -> (smallArea: Double, largeArea: Double) {
     // TODO: This value will never change, so it should be a constant
-    let pi = 3.14159
+    var pi = 3.14159
     
     // TODO: This value needs to change, so it should be a variable
-    var radius = 5.0
+    let radius = 5.0
     
     let smallArea = pi * radius * radius
     

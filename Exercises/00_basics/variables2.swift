@@ -5,7 +5,7 @@
 
 func countApples() -> (initial: Int, final: Int) {
     // TODO: Fix this declaration so we can modify the apple count
-    var apples = 3
+    let apples = 3
     let initialCount = apples
     
     // I just bought 2 more apples! Update the count.

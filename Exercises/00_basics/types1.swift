@@ -10,13 +10,13 @@
 /// Fix the type annotations to match the values being assigned
 func getLanguageInfo() -> (name: String, year: Int, version: Double) {
     // TODO: Fix the type annotation - what type should store text?
-    let name: String = "Swift"
+    let name: Int = "Swift"
     
     // TODO: Fix the type annotation - what type should store whole numbers?
-    let year: Int = 2024
+    let year: String = 2024
     
     // TODO: Fix the type annotation - what type should store decimal numbers?
-    let version: Double = 5.9
+    let version: Int = 5.9
     
     return (name, year, version)
 }
