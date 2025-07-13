@@ -9,9 +9,7 @@
 // The file of this exercise is `Exercises/00_basics/intro1.swift`. Have a look!
 // The current exercise path will always be shown when you run an exercise.
 //
-// To move to the next exercise, remove the "I AM NOT DONE" comment below.
 
-// I AM NOT DONE
 
 func main() {
     print("       Welcome to...                      ")
@@ -26,5 +24,4 @@ func main() {
     print("or logic errors. The central concept behind Swiftlings is to fix these errors")
     print("and solve the exercises. Good luck!")
     print()
-    print("You're doing great! When you're ready, remove the \"I AM NOT DONE\" comment.")
 }

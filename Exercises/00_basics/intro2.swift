@@ -5,9 +5,21 @@
 // Swift uses the `print()` function to output text to the console.
 // This is one of the most basic operations in any programming language.
 //
-// Fix the code below to make it compile and print "Hello, World!"
+// Fix the code below to make it compile and return "Hello, World!"
+
+func greet() -> String {
+    // TODO: Fix this line - Swift doesn't have a println function
+    // Change 'println' to 'print' to make it compile
+    println("Hello, World!")
+    
+    return "Hello, World!"
+}
 
 func main() {
-  // TODO: Fix this line - Swift doesn't have a println function
-  println("Hello, World!")
+    test("Greeting function returns correct message") {
+        let message = greet()
+        assertEqual(message, "Hello, World!", "Should return the greeting message")
+    }
+    
+    runTests()
 }
