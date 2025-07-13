@@ -6,61 +6,52 @@ struct WatchCommand: ParsableCommand {
     commandName: "watch",
     abstract: "Watch exercises and run them automatically when files change"
   )
-  
+
   func run() throws {
     do {
       let manager = try ExerciseManager()
-      
+
       Terminal.clear()
       print("Welcome to Swiftlings watch mode! 👀")
       print("")
       print(manager.welcomeMessage)
       print("")
-      
-      // Get current exercise
+
       guard var currentExercise = manager.getCurrentExercise() else {
         Terminal.success("Congratulations! You've completed all exercises! 🎉")
         print("\n\(manager.finalMessage)")
         return
       }
-      
-      // Create file watcher for the current exercise
+
       var watcher: FileWatcher?
       var isRunning = true
       var lastResult: ExerciseResult?
       let inputQueue = DispatchQueue(label: "input-queue")
-      
-      // Function to run the current exercise
+
       func runCurrentExercise() {
         Terminal.clear()
         Terminal.info("Watching: \(currentExercise.name)")
         print("File: \(currentExercise.filePath)")
         print("")
-        
+
         let runner = ExerciseRunner(exercise: currentExercise)
         do {
           let result = try runner.run()
           lastResult = result
-          
+
           switch result {
           case .success(let output):
             if !output.isEmpty {
               print("Output:")
               print(output)
             }
-            
-            let wasDone = runner.checkIfDone()
-            if !wasDone {
-              try? runner.removeDoneMarker()
-              Terminal.info("✓ Automatically removed 'I AM NOT DONE' marker")
-            }
-            
+
+
             Terminal.success("Exercise \(currentExercise.name) completed successfully!")
             print("")
-            
-            // Mark as completed
+
             manager.markCompleted(currentExercise)
-            
+
             if let nextExercise = manager.getNextPendingExercise() {
               Terminal.info("Great job! Next exercise: \(nextExercise.name)")
               print("Type 'n' and press Enter to move to the next exercise")
@@ -71,28 +62,22 @@ struct WatchCommand: ParsableCommand {
               isRunning = false
               return
             }
-            
+
           case .compilationError(let message):
             Terminal.error("Compilation failed:")
             print("")
             print(message)
             print("")
-            
+
           case .testFailure(let message):
             Terminal.error("Tests failed:")
             print(message)
-            
-          case .notDone:
-            Terminal.warning("Remove the 'I AM NOT DONE' comment when you're ready!")
           }
         } catch {
           Terminal.error("Failed to run exercise: \(error)")
         }
-        
+
         if isRunning {
-          print("")
-          Terminal.info("I'll keep watching for changes...")
-          print("")
           print("Commands (type and press Enter):")
           print("  h - hint")
           print("  l - list")
@@ -104,45 +89,46 @@ struct WatchCommand: ParsableCommand {
           fflush(stdout)
         }
       }
-      
+
       // Function to switch to next exercise
       func switchToNextExercise() {
         watcher?.stop()
-        
+
         guard let nextExercise = manager.getNextPendingExercise() else {
           Terminal.success("All exercises completed! 🎉")
           print(manager.finalMessage)
           isRunning = false
           return
         }
-        
+
         currentExercise = nextExercise
         manager.setCurrentExercise(nextExercise)
-        
+
         let exercisePath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
           .appendingPathComponent(currentExercise.filePath).path
-        
+
         watcher = FileWatcher(path: exercisePath) {
           runCurrentExercise()
         }
         watcher?.start()
-        
+
         runCurrentExercise()
       }
-      
+
       runCurrentExercise()
-      
+
       let exercisePath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
         .appendingPathComponent(currentExercise.filePath).path
       watcher = FileWatcher(path: exercisePath) {
         runCurrentExercise()
       }
       watcher?.start()
-      
+
       inputQueue.async {
         while isRunning {
           if let input = readLine()?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased(),
-             !input.isEmpty {
+            !input.isEmpty
+          {
             let char = input.first!
             DispatchQueue.main.async {
               switch char {
@@ -155,21 +141,22 @@ struct WatchCommand: ParsableCommand {
                 print("Press Enter to continue...")
                 _ = readLine()
                 runCurrentExercise()
-                
+
               case "l":
                 Terminal.clear()
                 let stats = manager.getProgressStats()
-                
+
                 Terminal.info("Exercise Progress:")
                 print("")
-                Terminal.success("Completed: \(stats.completed)/\(stats.total) (\(Int(stats.percentage))%)")
+                Terminal.success(
+                  "Completed: \(stats.completed)/\(stats.total) (\(Int(stats.percentage))%)")
                 print("")
                 print("Current exercise: \(currentExercise.name)")
                 print("")
                 print("Press Enter to continue...")
                 _ = readLine()
                 runCurrentExercise()
-                
+
               case "n":
                 if let result = lastResult, result.isSuccess {
                   Terminal.info("Moving to next exercise...")
@@ -179,16 +166,16 @@ struct WatchCommand: ParsableCommand {
                   Thread.sleep(forTimeInterval: 2)
                   runCurrentExercise()
                 }
-                
+
               case "r":
                 runCurrentExercise()
-                
+
               case "q":
                 Terminal.info("Exiting watch mode...")
                 watcher?.stop()
                 isRunning = false
                 Foundation.exit(0)
-                
+
               default:
                 print("Unknown command: '\(input)'")
                 print("> ", terminator: "")
@@ -198,7 +185,7 @@ struct WatchCommand: ParsableCommand {
           }
         }
       }
-      
+
       while isRunning {
         RunLoop.main.run()
       }
