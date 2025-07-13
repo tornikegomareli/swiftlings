@@ -57,6 +57,171 @@
       "name": "strings2",
       "dir": "00_basics",
       "hint": "Multi-line strings use triple quotes \"\"\" at the start and end. Use \\ for escape sequences like \\\" and \\n"
+    },
+    {
+      "name": "if1",
+      "dir": "01_control_flow",
+      "hint": "The condition in an if statement must be a Bool. Use comparison operators like >= to create boolean conditions."
+    },
+    {
+      "name": "if2",
+      "dir": "01_control_flow",
+      "hint": "Use < for age check. For multiple conditions, use || (OR) to check if student OR senior (age >= 65)."
+    },
+    {
+      "name": "switch1",
+      "dir": "01_control_flow",
+      "hint": "Each case needs a return statement. Swift doesn't fall through cases by default."
+    },
+    {
+      "name": "switch2",
+      "dir": "01_control_flow",
+      "hint": "Use ranges in switch cases: 90...100 for A, 80...89 for B, etc. Check for invalid scores first!"
+    },
+    {
+      "name": "loops1",
+      "dir": "01_control_flow",
+      "hint": "Use ... for closed range (includes both bounds). For even numbers, check if number % 2 == 0."
+    },
+    {
+      "name": "loops2",
+      "dir": "01_control_flow",
+      "hint": "Change != to ==, increment with +=, and use 'while' instead of 'if' for the digit collection."
+    },
+    {
+      "name": "loops3",
+      "dir": "01_control_flow",
+      "hint": "Use 'return number' to exit the function early. Use 'continue' to skip to the next iteration."
+    },
+    {
+      "name": "functions1",
+      "dir": "02_functions",
+      "hint": "Add -> String return type. Add parameters (a: Int, b: Int). Use parameter names inside the function body."
+    },
+    {
+      "name": "functions2",
+      "dir": "02_functions",
+      "hint": "Change 'x' and 'y' to 'base' and 'exponent'. Add 'of' before number. Use _ to omit external name."
+    },
+    {
+      "name": "functions3",
+      "dir": "02_functions",
+      "hint": "Add = 1.0 for default rate. Use '...' for variadic: (numbers: Int...). Add default values with =."
+    },
+    {
+      "name": "functions4",
+      "dir": "02_functions",
+      "hint": "Add 'inout' before parameter types. The function modifies the original values passed with &."
+    },
+    {
+      "name": "functions5",
+      "dir": "02_functions",
+      "hint": "Function type is (Int, Int) -> Int. Parameter type should accept functions. Return type is a function."
+    },
+    {
+      "name": "arrays1",
+      "dir": "03_collections",
+      "hint": "Use commas between elements. Empty array: [String](). Type should be Array<Double>. Arrays start at index 0. Use .count property."
+    },
+    {
+      "name": "arrays2",
+      "dir": "03_collections",
+      "hint": "Use .append(), .insert(_:at:), .removeLast(). Filter needs == 0. String interpolation needs \\()."
+    },
+    {
+      "name": "dictionaries1",
+      "dir": "03_collections",
+      "hint": "Use : between key and value. Empty dict: [:]. Values should be Double. Use [key] = value syntax. Use .count property."
+    },
+    {
+      "name": "dictionaries2",
+      "dir": "03_collections",
+      "hint": "Unwrap before +=. Use .updateValue(_:forKey:). Use .removeValue(forKey:). Assign nil to remove."
+    },
+    {
+      "name": "sets1",
+      "dir": "03_collections",
+      "hint": "Use square brackets []. Empty: Set<String>(). Convert each string to Character. Use .union(), .intersection(), .subtracting()."
+    },
+    {
+      "name": "optionals1",
+      "dir": "04_optionals",
+      "hint": "Use 'if let name = name'. Add ! to force unwrap. Use ?? \"Unknown\" for default value."
+    },
+    {
+      "name": "optionals2",
+      "dir": "04_optionals",
+      "hint": "Use 'guard let name = name'. Combine with commas. Use the unwrapped value in conditions and operations."
+    },
+    {
+      "name": "optionals3",
+      "dir": "04_optionals",
+      "hint": "Add ? for optional chaining. Use person1 for city. Access through optional chain: ?. for each level."
+    },
+    {
+      "name": "optionals4",
+      "dir": "04_optionals",
+      "hint": "Add ?? \"light\". Chain with ?? 16. Use parentheses: (saved ?? true). Handle double optionals with ?? and casting."
+    },
+    {
+      "name": "structs1",
+      "dir": "05_structs",
+      "hint": "Use 'struct' keyword. Add properties to Person. Use Point(x: 10, y: 20) syntax. Structs get automatic initializers."
+    },
+    {
+      "name": "structs2",
+      "dir": "05_structs",
+      "hint": "Add -> Double return type. Perimeter = 2 * (width + height). Check width == height. Use 'static' for class methods."
+    },
+    {
+      "name": "structs3",
+      "dir": "05_structs",
+      "hint": "Fahrenheit needs get/set. Kelvin = celsius + 273.15, remove setter. Use <= 0 for freezing. Use 'var' for computed properties."
+    },
+    {
+      "name": "structs4",
+      "dir": "05_structs",
+      "hint": "Add 'mutating' keyword. Initialize balance = 0. Add second init. Check balance >= amount before withdrawing."
+    },
+    {
+      "name": "classes1",
+      "dir": "06_classes",
+      "hint": "Change to 'class'. Add init method. Car should inherit (: Vehicle). Call super.init after setting properties."
+    },
+    {
+      "name": "classes2",
+      "dir": "06_classes",
+      "hint": "Remove 'final' to allow override. Add 'override' keyword. Set properties before super.init. Return \"Meow!\" with exclamation."
+    },
+    {
+      "name": "classes3",
+      "dir": "06_classes",
+      "hint": "Make fileHandle private. Use 'static' for class property. Add deinit {}. Change 'private' to 'fileprivate' for verifyPin."
+    },
+    {
+      "name": "classes4",
+      "dir": "06_classes",
+      "hint": "Add 'lazy' keyword. Make shared 'static'. Use 'class' instead of 'static' for overridable methods. Make init private."
+    },
+    {
+      "name": "enums1",
+      "dir": "07_enums",
+      "hint": "Add cases to CompassDirection. Raw values auto-increment from 1. Use .rawValue property. Use init(rawValue:) for creation."
+    },
+    {
+      "name": "enums2",
+      "dir": "07_enums",
+      "hint": "Remove labels from case definition. Add (Int, Int, Int, Int) to upc case. Extract values in switch cases. Use let to bind values."
+    },
+    {
+      "name": "enums3",
+      "dir": "07_enums",
+      "hint": "Complete all switch cases. Check rawValue <= 4 for isInner. Make allCases static. Operations should return calculated results."
+    },
+    {
+      "name": "enums4",
+      "dir": "07_enums",
+      "hint": "Add : CaseIterable. Use 'indirect' for recursive enum. Evaluate recursively. Count: 1 + next.count(). Array: [value] + next.toArray()."
     }
   ]
 }
