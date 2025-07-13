@@ -15,6 +15,11 @@ class ExerciseManager {
         metadata.exercises
     }
     
+    /// Get all exercises (method version for compatibility)
+    func getAllExercises() -> [Exercise] {
+        metadata.exercises
+    }
+    
     /// Get exercise by name
     func getExercise(named name: String) -> Exercise? {
         metadata.exercises.first { $0.name == name }
@@ -40,9 +45,19 @@ class ExerciseManager {
         return metadata.exercises
     }
     
+    /// Get pending (incomplete) exercises
+    func getPendingExercises() -> [Exercise] {
+        return getExercises(completed: false)
+    }
+    
     /// Get exercise status
     func getExerciseStatus(_ exercise: Exercise) -> String {
         progressTracker.isCompleted(exercise.name) ? "✅" : "❌"
+    }
+    
+    /// Check if an exercise is completed
+    func isCompleted(_ exerciseName: String) -> Bool {
+        progressTracker.isCompleted(exerciseName)
     }
     
     /// Mark exercise as completed
