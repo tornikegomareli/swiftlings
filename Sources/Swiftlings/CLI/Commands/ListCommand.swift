@@ -44,7 +44,7 @@ struct ListCommand: ParsableCommand {
         let name = exercise.name.padding(toLength: 20, withPad: " ", startingAt: 0)
         let dir = exercise.dir.padding(toLength: 15, withPad: " ", startingAt: 0)
 
-        print("\(status) \(name) \(dir) \(exercise.test ? "test" : "compile")")
+        print("\(status) \(name) \(dir)")
       }
 
       print("\n")
