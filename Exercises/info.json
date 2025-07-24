@@ -222,6 +222,66 @@
       "name": "enums4",
       "dir": "07_enums",
       "hint": "Add : CaseIterable. Use 'indirect' for recursive enum. Evaluate recursively. Count: 1 + next.count(). Array: [value] + next.toArray()."
+    },
+    {
+      "name": "protocols1",
+      "dir": "08_protocols",
+      "hint": "Add property/method requirements to protocols. Conform with : Protocol. Implement all requirements. Use Describable as parameter type."
+    },
+    {
+      "name": "protocols2",
+      "dir": "08_protocols",
+      "hint": "Add : Vehicle to inherit. Use 'extension Vehicle' for defaults. Return formatted string. Add where T: Vehicle constraint."
+    },
+    {
+      "name": "protocols3",
+      "dir": "08_protocols",
+      "hint": "Use Named & Aged for composition. Add : Container to Stack. Fix count and getAll. Use items.removeLast() for retrieve."
+    },
+    {
+      "name": "protocols4",
+      "dir": "08_protocols",
+      "hint": "Add : AnyObject for class-only. Use 'weak var delegate'. Set downloader.delegate = self. Comment out struct conformance."
+    },
+    {
+      "name": "extensions1",
+      "dir": "09_extensions",
+      "hint": "Add 'var isEven: Bool { self % 2 == 0 }'. Use components(separatedBy:). Add 'where Element == Int'. Use pow() for rounding."
+    },
+    {
+      "name": "extensions2",
+      "dir": "09_extensions",
+      "hint": "Add : Describable to extension. Use String(repeating:count:). Check indices.contains(). Add where Element: Describable."
+    },
+    {
+      "name": "extensions3",
+      "dir": "09_extensions",
+      "hint": "Add 'where Element: Numeric'. Use reduce. Add enum ValidationError inside extension. Return \"ID-\\(Int.random(in: 10000...99999))\"."
+    },
+    {
+      "name": "extensions4",
+      "dir": "09_extensions",
+      "hint": "Add 'where Value: Numeric' and 'where Key == String'. Use 'guard let self else { throw }'. Add 'where Element: Priceable'."
+    },
+    {
+      "name": "generics1",
+      "dir": "10_generics",
+      "hint": "Add <T> after function name. Change parameter/return types to T. Add <T: Comparable>. Use <T, U> for multiple parameters."
+    },
+    {
+      "name": "generics2",
+      "dir": "10_generics",
+      "hint": "Add <T: Equatable>. Add <T: Numeric>. Use <T: Comparable & CustomStringConvertible>. Add 'where T: Comparable' to method."
+    },
+    {
+      "name": "generics3",
+      "dir": "10_generics",
+      "hint": "Add 'associatedtype Item'. Use items.removeFirst(). Capture store in var. Implement storage[key] = value."
+    },
+    {
+      "name": "generics4",
+      "dir": "10_generics",
+      "hint": "Add 'where Failure: Error'. Check case with switch. Add ': Equatable where Success: Equatable, Failure: Equatable'. Use '-> some Shape'."
     }
   ]
 }
