@@ -2,6 +2,13 @@
 
 This section covers Swift's collection types: Arrays, Dictionaries, and Sets.
 
+## Official Swift Documentation
+- [Collection Types - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes)
+- [Arrays - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Arrays)
+- [Sets - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Sets)
+- [Dictionaries - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/collectiontypes#Dictionaries)
+- [Swift Standard Library - Collections](https://developer.apple.com/documentation/swift/collections)
+
 ## Topics Covered
 
 ### Arrays

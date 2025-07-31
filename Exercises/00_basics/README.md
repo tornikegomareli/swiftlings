@@ -2,6 +2,13 @@
 
 Welcome to Swift! This section covers the fundamental building blocks of the Swift programming language.
 
+## Official Swift Documentation
+- [The Basics - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics)
+- [Swift API Design Guidelines](https://www.swift.org/documentation/api-design-guidelines/)
+- [String and Characters - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/stringsandcharacters)
+- [Basic Operators - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators)
+- [Getting Started with Swift](https://www.swift.org/getting-started/)
+
 In this section, you'll learn about:
 - Variables and constants
 - Basic data types

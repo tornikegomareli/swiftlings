@@ -2,6 +2,13 @@
 
 This section covers Swift's control flow structures that allow you to control the execution flow of your program.
 
+## Official Swift Documentation
+- [Control Flow - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow)
+- [Conditional Statements - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Conditional-Statements)
+- [Switch - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Switch)
+- [For-In Loops - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#For-In-Loops)
+- [While Loops - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#While-Loops)
+
 ## Topics Covered
 
 ### Conditionals

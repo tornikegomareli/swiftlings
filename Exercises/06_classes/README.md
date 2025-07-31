@@ -2,6 +2,13 @@
 
 This section covers Swift classes - reference types that support inheritance, deinitializers, and more.
 
+## Official Swift Documentation
+- [Classes - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
+- [Inheritance - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/inheritance)
+- [Initialization - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization)
+- [Deinitialization - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/deinitialization)
+- [Access Control - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/accesscontrol)
+
 ## Topics Covered
 
 ### Class Basics

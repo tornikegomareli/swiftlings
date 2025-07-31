@@ -2,6 +2,13 @@
 
 This section covers Swift extensions - a powerful feature for adding functionality to existing types.
 
+## Official Swift Documentation
+- [Extensions - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions)
+- [Adding Protocol Conformance with Extensions](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions#Adding-Protocol-Conformance-with-an-Extension)
+- [Conditional Conformance - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/extensions#Conditional-Conformance)
+- [Swift Evolution: Conditional Conformances (SE-0143)](https://github.com/apple/swift-evolution/blob/main/proposals/0143-conditional-conformances.md)
+- [Extending a Protocol (WWDC)](https://developer.apple.com/videos/play/wwdc2015/408/)
+
 ## Topics Covered
 
 ### Basic Extensions

@@ -2,6 +2,13 @@
 
 This section covers Swift's optional types - a powerful feature for handling the absence of values safely.
 
+## Official Swift Documentation
+- [The Basics: Optionals - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/thebasics#Optionals)
+- [Optional Chaining - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/optionalchaining)
+- [Guard Statement - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/controlflow#Early-Exit)
+- [Nil-Coalescing Operator - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/basicoperators#Nil-Coalescing-Operator)
+- [Swift API Guidelines: Optionals](https://www.swift.org/documentation/api-design-guidelines/#strive-for-fluent-usage)
+
 ## Topics Covered
 
 ### Optional Basics

@@ -2,6 +2,13 @@
 
 This section covers Swift generics - one of the most powerful features for writing flexible, reusable code.
 
+## Official Swift Documentation
+- [Generics - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics)
+- [Generic Parameters and Arguments](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics#Generic-Parameters-and-Arguments)
+- [Type Constraints - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics#Type-Constraints)
+- [Associated Types - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics#Associated-Types)
+- [Swift Generics (WWDC)](https://developer.apple.com/videos/play/wwdc2018/406/)
+
 ## Topics Covered
 
 ### Generic Functions

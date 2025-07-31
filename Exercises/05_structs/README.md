@@ -2,6 +2,13 @@
 
 This section covers Swift structs - value types that encapsulate data and behavior.
 
+## Official Swift Documentation
+- [Structures and Classes - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/classesandstructures)
+- [Properties - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/properties)
+- [Methods - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/methods)
+- [Initialization - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/initialization)
+- [Value and Reference Types (WWDC)](https://developer.apple.com/videos/play/wwdc2015/414/)
+
 ## Topics Covered
 
 ### Struct Basics

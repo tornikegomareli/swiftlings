@@ -2,6 +2,13 @@
 
 This section covers Swift protocols - blueprints that define requirements for types to implement.
 
+## Official Swift Documentation
+- [Protocols - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols)
+- [Protocol Requirements - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Protocol-Requirements)
+- [Protocol Extensions - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/protocols#Protocol-Extensions)
+- [Protocol-Oriented Programming (WWDC)](https://developer.apple.com/videos/play/wwdc2015/408/)
+- [Swift Evolution: Protocol-Oriented Programming](https://github.com/apple/swift-evolution/blob/main/proposals/0019-package-manager-testing.md)
+
 ## Topics Covered
 
 ### Protocol Basics

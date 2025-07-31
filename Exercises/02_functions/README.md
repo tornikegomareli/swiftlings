@@ -2,6 +2,13 @@
 
 This section covers Swift functions - the building blocks of any Swift program.
 
+## Official Swift Documentation
+- [Functions - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions)
+- [Function Parameter Names - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Function-Argument-Labels-and-Parameter-Names)
+- [Function Types - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Function-Types)
+- [In-Out Parameters - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#In-Out-Parameters)
+- [Variadic Parameters - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/functions#Variadic-Parameters)
+
 ## Topics Covered
 
 ### Function Basics

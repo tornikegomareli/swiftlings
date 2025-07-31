@@ -2,6 +2,13 @@
 
 This section covers Swift enumerations - powerful types for modeling data with a fixed set of cases.
 
+## Official Swift Documentation
+- [Enumerations - The Swift Programming Language](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations)
+- [Raw Values - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations#Raw-Values)
+- [Associated Values - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations#Associated-Values)
+- [Recursive Enumerations - Swift Documentation](https://docs.swift.org/swift-book/documentation/the-swift-programming-language/enumerations#Recursive-Enumerations)
+- [CaseIterable Protocol](https://developer.apple.com/documentation/swift/caseiterable)
+
 ## Topics Covered
 
 ### Basic Enums
