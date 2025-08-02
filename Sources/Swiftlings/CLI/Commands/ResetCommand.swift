@@ -6,19 +6,19 @@ struct ResetCommand: ParsableCommand {
     commandName: "reset",
     abstract: "Reset exercises and/or progress"
   )
-
+  
   @Argument(help: "The name of the exercise to reset (omit to reset all)")
   var exercise: String?
-
+  
   @Flag(help: "Reset all exercises to their broken state")
   var all = false
   
   @Flag(help: "Only reset progress, not exercise files")
   var progressOnly = false
-
+  
   @Flag(help: "Reset without confirmation")
   var force = false
-
+  
   func run() throws {
     let metadata = try ExerciseMetadata.load()
     let progressTracker = ProgressTracker()
