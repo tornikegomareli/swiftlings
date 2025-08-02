@@ -6,14 +6,14 @@ struct HintCommand: ParsableCommand {
     commandName: "hint",
     abstract: "Show a hint for an exercise"
   )
-
+  
   @Argument(help: "The name of the exercise to get a hint for")
   var exercise: String?
-
+  
   func run() throws {
     do {
       let manager = try ExerciseManager()
-
+      
       let exerciseForHint: Exercise
       if let exerciseName = exercise {
         guard let ex = manager.getExercise(named: exerciseName) else {
@@ -28,12 +28,12 @@ struct HintCommand: ParsableCommand {
         }
         exerciseForHint = ex
       }
-
+      
       Terminal.info("Hint for '\(exerciseForHint.name)':")
       print("")
       print("💡 \(exerciseForHint.hint)")
       print("")
-
+      
     } catch {
       Terminal.error("Failed to show hint: \(error)")
       throw ExitCode.failure

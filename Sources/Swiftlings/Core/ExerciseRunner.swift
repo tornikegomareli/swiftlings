@@ -2,166 +2,129 @@ import Foundation
 
 /// Custom error for compilation failures
 struct CompilationError: Error {
-  let message: String
+    let message: String
 }
 
 /// Handles compilation and execution of exercises
-class ExerciseRunner {
-  private let exercise: Exercise
-  private let fileManager = FileManager.default
-
-  init(exercise: Exercise) {
-    self.exercise = exercise
-  }
-
-  /// Determine if the exercise uses the new test-based approach
-  private func usesTestApproach() -> Bool {
-    let fullPath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-      .appendingPathComponent(exercise.filePath)
+final class ExerciseRunner {
+    private let exercise: Exercise
+    private let fileManager: FileManager
+    private let compiler: ExerciseCompiler
+    private let executor: ExerciseExecutor
+    private let testDetector: TestDetector
     
-    guard let content = try? String(contentsOf: fullPath) else {
-      return false
+    init(
+        exercise: Exercise,
+        fileManager: FileManager = .default,
+        compiler: ExerciseCompiler = ExerciseCompiler(),
+        executor: ExerciseExecutor = ExerciseExecutor(),
+        testDetector: TestDetector = TestDetector()
+    ) {
+        self.exercise = exercise
+        self.fileManager = fileManager
+        self.compiler = compiler
+        self.executor = executor
+        self.testDetector = testDetector
     }
     
-    // Check if the file imports our assert framework or calls runTests()
-    return content.contains("runTests()") || content.contains("SwiftlingsAssert") || 
-           content.contains("assertEqual") || content.contains("assertTrue")
-  }
-
-  /// Run the exercise
-  func run() throws -> ExerciseResult {
-
-    // Create a temporary directory for compilation
-    let tempDir = FileManager.default.temporaryDirectory
-      .appendingPathComponent("swiftlings-\(UUID().uuidString)")
-    try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
-
-    defer {
-      // Clean up temporary directory
-      try? fileManager.removeItem(at: tempDir)
-    }
-
-    // Copy exercise file to temp directory
-    let tempFile = tempDir.appendingPathComponent("\(exercise.name).swift")
-    let sourceFile = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-      .appendingPathComponent(exercise.filePath)
-    try fileManager.copyItem(at: sourceFile, to: tempFile)
-
-    // Copy Assert.swift to temp directory if exercise uses test approach
-    let usesTests = usesTestApproach()
-    if usesTests {
-      let assertSourcePath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
-        .appendingPathComponent("Sources/Swiftlings/Core/Assert.swift")
-      let assertDestPath = tempDir.appendingPathComponent("Assert.swift")
-      
-      if fileManager.fileExists(atPath: assertSourcePath.path) {
-        try fileManager.copyItem(at: assertSourcePath, to: assertDestPath)
-      }
-    }
-    
-    // Create a main.swift that calls the exercise
-    let mainFile = tempDir.appendingPathComponent("main.swift")
-    let mainContent = """
-      // Call the main function from the exercise
-      main()
-      """
-    try mainContent.write(to: mainFile, atomically: true, encoding: .utf8)
-
-    do {
-      // Use Process instead of shellOut to capture stderr
-      let process = Process()
-      process.currentDirectoryURL = tempDir
-      process.executableURL = URL(fileURLWithPath: "/usr/bin/swiftc")
-      var compileArgs = ["-o", "exercise", "main.swift", "\(exercise.name).swift"]
-      if usesTests && fileManager.fileExists(atPath: tempDir.appendingPathComponent("Assert.swift").path) {
-        compileArgs.append("Assert.swift")
-      }
-      process.arguments = compileArgs
-
-      let errorPipe = Pipe()
-      let outputPipe = Pipe()
-      process.standardError = errorPipe
-      process.standardOutput = outputPipe
-
-      try process.run()
-      process.waitUntilExit()
-
-      let errorData = errorPipe.fileHandleForReading.readDataToEndOfFile()
-      let outputData = outputPipe.fileHandleForReading.readDataToEndOfFile()
-
-      if process.terminationStatus != 0 {
-        let errorOutput = String(data: errorData, encoding: .utf8) ?? ""
-        let standardOutput = String(data: outputData, encoding: .utf8) ?? ""
-        let combinedOutput = errorOutput.isEmpty ? standardOutput : errorOutput
-        throw CompilationError(message: combinedOutput)
-      }
-
-      let compileOutput = String(data: outputData, encoding: .utf8) ?? ""
-
-      if !compileOutput.isEmpty {
-        Terminal.info("Compiler output: \(compileOutput)")
-      }
-
-      // Run the compiled exercise
-      Terminal.progress("Running \(exercise.name)...")
-
-      let runProcess = Process()
-      runProcess.currentDirectoryURL = tempDir
-      runProcess.executableURL = tempDir.appendingPathComponent("exercise")
-
-      let runOutputPipe = Pipe()
-      let runErrorPipe = Pipe()
-      runProcess.standardOutput = runOutputPipe
-      runProcess.standardError = runErrorPipe
-
-      try runProcess.run()
-      runProcess.waitUntilExit()
-
-      let runOutputData = runOutputPipe.fileHandleForReading.readDataToEndOfFile()
-      let runErrorData = runErrorPipe.fileHandleForReading.readDataToEndOfFile()
-
-      let runOutput = String(data: runOutputData, encoding: .utf8) ?? ""
-      let runError = String(data: runErrorData, encoding: .utf8) ?? ""
-
-      // For test-based exercises, check the exit code and output
-      if usesTests {
-        if runProcess.terminationStatus != 0 {
-          // Test failure - tests didn't pass
-          let combinedOutput = runOutput + (runError.isEmpty ? "" : "\n\(runError)")
-          return .testFailure(message: combinedOutput)
-        } else {
-          // Tests passed
-          return .success(output: runOutput)
+    /// Run the exercise
+    func run() throws -> ExerciseResult {
+        let tempDir = createTempDirectory()
+        defer { cleanupTempDirectory(tempDir) }
+        
+        try setupExerciseFiles(in: tempDir)
+        
+        let sourceFile = URL(fileURLWithPath: fileManager.currentDirectoryPath)
+            .appendingPathComponent(exercise.filePath)
+        let usesTests = testDetector.usesTestApproach(exercisePath: sourceFile)
+        
+        // Compile
+        Terminal.progress("Compiling \(exercise.name)...")
+        let compilationResult = try compiler.compile(
+            exercise: exercise,
+            in: tempDir,
+            includeAssert: usesTests
+        )
+        
+        switch compilationResult {
+        case .success(let output):
+            if !output.isEmpty {
+                Terminal.info("Compiler output: \(output)")
+            }
+        case .failure(let message):
+            return .compilationError(message: message)
         }
-      } else {
-        // For non-test exercises, any non-zero exit code is a failure
-        if runProcess.terminationStatus != 0 {
-          let errorMessage =
-            runError.isEmpty
-            ? "Exercise failed with exit code \(runProcess.terminationStatus)" : runError
-          return .testFailure(message: errorMessage)
+        
+        // Execute
+        Terminal.progress("Running \(exercise.name)...")
+        let executablePath = tempDir.appendingPathComponent("exercise")
+        let executionResult = try executor.execute(
+            executablePath: executablePath,
+            usesTests: usesTests
+        )
+        
+        switch executionResult {
+        case .success(let output):
+            return .success(output: output)
+        case .testFailure(let message):
+            return .testFailure(message: message)
         }
-        return .success(output: runOutput)
-      }
-
-    } catch let error as CompilationError {
-      return .compilationError(message: error.message)
     }
-  }
+    
+    // MARK: - Private Helpers
+    
+    private func createTempDirectory() -> URL {
+        let tempDir = fileManager.temporaryDirectory
+            .appendingPathComponent("swiftlings-\(UUID().uuidString)")
+        try? fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
+        return tempDir
+    }
+    
+    private func cleanupTempDirectory(_ directory: URL) {
+        try? fileManager.removeItem(at: directory)
+    }
+    
+    private func setupExerciseFiles(in directory: URL) throws {
+        // Copy exercise file
+        let tempFile = directory.appendingPathComponent("\(exercise.name).swift")
+        let sourceFile = URL(fileURLWithPath: fileManager.currentDirectoryPath)
+            .appendingPathComponent(exercise.filePath)
+        try fileManager.copyItem(at: sourceFile, to: tempFile)
+        
+        // Copy Assert.swift if needed
+        let usesTests = testDetector.usesTestApproach(exercisePath: sourceFile)
+        if usesTests {
+            let assertSourcePath = URL(fileURLWithPath: fileManager.currentDirectoryPath)
+                .appendingPathComponent("Sources/Swiftlings/Core/Assert.swift")
+            let assertDestPath = directory.appendingPathComponent("Assert.swift")
+            
+            if fileManager.fileExists(atPath: assertSourcePath.path) {
+                try fileManager.copyItem(at: assertSourcePath, to: assertDestPath)
+            }
+        }
+        
+        // Create main.swift
+        let mainFile = directory.appendingPathComponent("main.swift")
+        let mainContent = """
+            // Call the main function from the exercise
+            main()
+            """
+        try mainContent.write(to: mainFile, atomically: true, encoding: .utf8)
+    }
 }
 
-/// Result of running an exercise
+/// Exercise execution result
 enum ExerciseResult {
-  case success(output: String)
-  case compilationError(message: String)
-  case testFailure(message: String)
-
-  var isSuccess: Bool {
-    switch self {
-    case .success:
-      return true
-    default:
-      return false
+    case success(output: String)
+    case compilationError(message: String)
+    case testFailure(message: String)
+    
+    var isSuccess: Bool {
+        switch self {
+        case .success:
+            return true
+        default:
+            return false
+        }
     }
-  }
 }
