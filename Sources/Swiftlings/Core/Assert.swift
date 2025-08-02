@@ -1,10 +1,10 @@
 import Foundation
 
 /// Custom assertion framework for Swiftlings exercises
-public struct SwiftlingsAssert {
+public enum SwiftlingsAssert {
   private static var testResults: [TestResult] = []
   private static var currentTest: String = ""
-  
+
   public struct TestResult {
     let testName: String
     let passed: Bool
@@ -12,7 +12,7 @@ public struct SwiftlingsAssert {
     let file: String
     let line: Int
   }
-  
+
   /// Assert that two values are equal
   public static func assertEqual<T: Equatable>(
     _ actual: T,
@@ -24,7 +24,7 @@ public struct SwiftlingsAssert {
     let passed = actual == expected
     let resultMessage = passed ? "✓ Passed" : "✗ Expected \(expected), but got \(actual)"
     let finalMessage = message.isEmpty ? resultMessage : "\(message): \(resultMessage)"
-    
+
     testResults.append(TestResult(
       testName: currentTest,
       passed: passed,
@@ -33,7 +33,7 @@ public struct SwiftlingsAssert {
       line: line
     ))
   }
-  
+
   /// Assert that a condition is true
   public static func assertTrue(
     _ condition: Bool,
@@ -43,7 +43,7 @@ public struct SwiftlingsAssert {
   ) {
     let passed = condition
     let resultMessage = passed ? "✓ Passed" : "✗ \(message)"
-    
+
     testResults.append(TestResult(
       testName: currentTest,
       passed: passed,
@@ -52,7 +52,7 @@ public struct SwiftlingsAssert {
       line: line
     ))
   }
-  
+
   /// Assert that a condition is false
   public static func assertFalse(
     _ condition: Bool,
@@ -62,7 +62,7 @@ public struct SwiftlingsAssert {
   ) {
     assertTrue(!condition, message, file: file, line: line)
   }
-  
+
   /// Assert that two values are not equal
   public static func assertNotEqual<T: Equatable>(
     _ actual: T,
@@ -74,7 +74,7 @@ public struct SwiftlingsAssert {
     let passed = actual != expected
     let resultMessage = passed ? "✓ Passed" : "✗ Expected values to be different, but both were \(actual)"
     let finalMessage = message.isEmpty ? resultMessage : "\(message): \(resultMessage)"
-    
+
     testResults.append(TestResult(
       testName: currentTest,
       passed: passed,
@@ -83,7 +83,7 @@ public struct SwiftlingsAssert {
       line: line
     ))
   }
-  
+
   /// Assert that a value is nil
   public static func assertNil<T>(
     _ value: T?,
@@ -94,7 +94,7 @@ public struct SwiftlingsAssert {
     let passed = value == nil
     let resultMessage = passed ? "✓ Passed" : "✗ Expected nil, but got \(value!)"
     let finalMessage = message.isEmpty ? resultMessage : "\(message): \(resultMessage)"
-    
+
     testResults.append(TestResult(
       testName: currentTest,
       passed: passed,
@@ -103,7 +103,7 @@ public struct SwiftlingsAssert {
       line: line
     ))
   }
-  
+
   /// Assert that a value is not nil
   public static func assertNotNil<T>(
     _ value: T?,
@@ -113,7 +113,7 @@ public struct SwiftlingsAssert {
   ) {
     let passed = value != nil
     let resultMessage = passed ? "✓ Passed" : "✗ \(message)"
-    
+
     testResults.append(TestResult(
       testName: currentTest,
       passed: passed,
@@ -122,36 +122,36 @@ public struct SwiftlingsAssert {
       line: line
     ))
   }
-  
+
   /// Run a test with a given name
   public static func test(_ name: String, _ testBlock: () -> Void) {
     currentTest = name
     testBlock()
   }
-  
+
   /// Run all tests and print results
   public static func runTests() {
     if testResults.isEmpty {
       print("⚠️  No tests were run!")
       exit(1)
     }
-    
+
     let failedTests = testResults.filter { !$0.passed }
     let passedCount = testResults.filter { $0.passed }.count
     let totalCount = testResults.count
-    
+
     print("\n" + String(repeating: "=", count: 50))
     print("Test Results")
     print(String(repeating: "=", count: 50))
-    
+
     // Group results by test name
     let groupedResults = Dictionary(grouping: testResults) { $0.testName }
-    
+
     for (testName, results) in groupedResults {
       let testPassed = results.allSatisfy { $0.passed }
       let icon = testPassed ? "✅" : "❌"
       print("\n\(icon) \(testName.isEmpty ? "Tests" : testName)")
-      
+
       for result in results {
         if !result.passed {
           print("   \(result.message)")
@@ -160,10 +160,10 @@ public struct SwiftlingsAssert {
         }
       }
     }
-    
+
     print("\n" + String(repeating: "=", count: 50))
     print("Summary: \(passedCount)/\(totalCount) assertions passed")
-    
+
     if failedTests.isEmpty {
       print("✅ All tests passed!")
       print(String(repeating: "=", count: 50) + "\n")
@@ -174,7 +174,7 @@ public struct SwiftlingsAssert {
       exit(1)
     }
   }
-  
+
   /// Clear all test results (useful for testing)
   public static func reset() {
     testResults.removeAll()

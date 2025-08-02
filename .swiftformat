@@ -1,0 +1,59 @@
+# https://github.com/nicklockwood/SwiftFormat/blob/main/Rules.md
+--exclude ./ShellParserGenerated
+--exclude ./Exercises
+--indent 2
+--indentcase true
+--patternlet inline
+--indentstrings true
+
+# https://github.com/nicklockwood/SwiftFormat/issues/483 fix indentation for expressions nested in ternary
+--wrapternary before-operators
+
+--disable all
+
+--enable anyObjectProtocol
+--enable blankLineAfterImports
+--enable blankLinesAtEndOfScope
+--enable blankLinesBetweenImports
+--enable conditionalAssignment
+--enable docComments
+--enable duplicateImports
+--enable elseOnSameLine
+--enable emptyBraces
+--enable enumNamespaces
+--enable genericExtensions
+--enable indent
+--enable leadingDelimiters
+--enable linebreakAtEndOfFile
+--enable linebreaks
+--enable modifierOrder
+--enable numberFormatting
+--enable preferForLoop
+--enable redundantBackticks
+--enable redundantBreak
+--enable redundantClosure
+--enable redundantFileprivate
+--enable redundantGet
+--enable redundantLet
+--enable redundantLetError
+--enable redundantObjc
+--enable redundantOptionalBinding
+--enable redundantVoidReturnType
+--enable semicolons
+--enable spaceAroundBraces
+--enable spaceAroundBrackets
+--enable spaceAroundGenerics
+--enable spaceAroundOperators
+--enable spaceAroundParens
+--enable spaceInsideBraces
+--enable spaceInsideBrackets
+--enable spaceInsideGenerics
+--enable spaceInsideParens
+--enable strongOutlets
+--enable trailingClosures
+--enable trailingCommas
+--enable trailingSpace
+--enable wrapMultilineStatementBraces
+
+--enable extensionAccessControl
+--extensionacl on-declarations

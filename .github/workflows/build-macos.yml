@@ -1,0 +1,51 @@
+name: Build - macOS
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build and Test on macOS
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        swift: ['6.0']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v2.3.0
+      with:
+        swift-version: ${{ matrix.swift }}
+        
+    - name: Show Swift version
+      run: swift --version
+        
+    - name: Cache Swift packages
+      uses: actions/cache@v4
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Build Debug
+      run: ./build-debug.sh
+      
+    - name: Build Release
+      run: ./build-release.sh
+      
+    - name: Run Tests
+      run: ./run-swift-test.sh
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v4
+      if: matrix.swift == '6.0'
+      with:
+        name: swiftlings-macos
+        path: .build/release/swiftlings
