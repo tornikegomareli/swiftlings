@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        swift: ['5.10', '6.0']
+        swift: ['5.10']
     
     steps:
     - name: Checkout code

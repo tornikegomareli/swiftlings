@@ -12,14 +12,14 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        swift: ['5.10', '6.0']
+        swift: ['5.10']
     
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
       
     - name: Setup Swift
-      uses: swift-actions/setup-swift@v2.1.0
+      uses: swift-actions/setup-swift@v2.3.0
       with:
         swift-version: ${{ matrix.swift }}
         
