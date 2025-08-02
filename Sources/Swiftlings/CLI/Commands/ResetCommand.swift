@@ -6,26 +6,26 @@ struct ResetCommand: ParsableCommand {
     commandName: "reset",
     abstract: "Reset exercises and/or progress"
   )
-  
+
   @Argument(help: "The name of the exercise to reset (omit to reset all)")
   var exercise: String?
-  
+
   @Flag(help: "Reset all exercises to their broken state")
   var all = false
-  
+
   @Flag(help: "Only reset progress, not exercise files")
   var progressOnly = false
-  
+
   @Flag(help: "Reset without confirmation")
   var force = false
-  
+
   func run() throws {
     let manager = try ExerciseManager()
-    
+
     // Determine what to reset
     let resetExercises = all || exercise != nil
     let resetProgress = all || progressOnly || exercise == nil
-    
+
     // Build confirmation message
     var confirmationParts: [String] = []
     if all {
@@ -36,13 +36,13 @@ struct ResetCommand: ParsableCommand {
     } else if progressOnly {
       confirmationParts.append("all progress")
     }
-    
+
     if !force && !confirmationParts.isEmpty {
       print("Are you sure you want to reset \(confirmationParts.joined(separator: " and "))? This will lose any changes.")
       print("Use --force to skip this confirmation.")
       return
     }
-    
+
     // Reset exercises
     if resetExercises && !progressOnly {
       if let exerciseName = exercise {
@@ -51,7 +51,7 @@ struct ResetCommand: ParsableCommand {
           Terminal.error("Exercise '\(exerciseName)' not found")
           throw ExitCode.failure
         }
-        
+
         Terminal.progress("Resetting exercise: \(exerciseName)...")
         try manager.resetExercise(exerciseToReset)
         Terminal.success("Exercise '\(exerciseName)' reset to original state")
@@ -64,14 +64,14 @@ struct ResetCommand: ParsableCommand {
         Terminal.success("All exercises reset to original state")
       }
     }
-    
+
     // Reset progress
     if resetProgress {
       Terminal.progress("Resetting progress...")
       manager.resetAllProgress()
       Terminal.success("Progress reset")
     }
-    
+
     print("")
     Terminal.info("Ready to start over! Run 'swiftlings' to begin.")
   }
