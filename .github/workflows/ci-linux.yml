@@ -1,0 +1,56 @@
+name: CI - Linux
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build and Test on Linux
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        swift: ['5.9', '5.10']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Swift
+      uses: swift-actions/setup-swift@v2
+      with:
+        swift-version: ${{ matrix.swift }}
+        
+    - name: Show Swift version
+      run: swift --version
+      
+    - name: Install dependencies
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y libncurses5-dev libncursesw5-dev
+        
+    - name: Cache Swift packages
+      uses: actions/cache@v3
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Build Debug
+      run: ./build-debug.sh
+      
+    - name: Build Release
+      run: ./build-release.sh
+      
+    - name: Run Tests
+      run: ./run-swift-test.sh
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      if: matrix.swift == '5.9'
+      with:
+        name: swiftlings-linux
+        path: .build/release/swiftlings

@@ -1,0 +1,56 @@
+name: CI - Windows
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build-and-test:
+    name: Build and Test on Windows
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        swift: ['5.9', '5.10']
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+      
+    - name: Setup Swift
+      uses: compnerd/gha-setup-swift@main
+      with:
+        branch: swift-${{ matrix.swift }}-release
+        tag: ${{ matrix.swift }}-RELEASE
+        
+    - name: Show Swift version
+      run: swift --version
+      shell: cmd
+        
+    - name: Cache Swift packages
+      uses: actions/cache@v3
+      with:
+        path: .build
+        key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
+        restore-keys: |
+          ${{ runner.os }}-spm-
+          
+    - name: Build Debug
+      run: swift build -c debug
+      shell: cmd
+      
+    - name: Build Release
+      run: swift build -c release
+      shell: cmd
+      
+    - name: Run Tests
+      run: swift test
+      shell: cmd
+      
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      if: matrix.swift == '5.9'
+      with:
+        name: swiftlings-windows
+        path: .build/release/swiftlings.exe
