@@ -2,96 +2,82 @@ import Foundation
 
 /// Manages exercises and their metadata
 class ExerciseManager {
-    private let metadata: ExerciseMetadata
-    private let progressTracker: ProgressTracker
-    
-    init() throws {
-        self.metadata = try ExerciseMetadata.load()
-        self.progressTracker = ProgressTracker()
+  private let metadata: ExerciseMetadata
+  private let progressTracker: ProgressTracker
+  
+  init() throws {
+    self.metadata = try ExerciseMetadata.load()
+    self.progressTracker = ProgressTracker()
+  }
+  
+  var allExercises: [Exercise] {
+    metadata.exercises
+  }
+  
+  func getAllExercises() -> [Exercise] {
+    metadata.exercises
+  }
+  
+  func getExercise(named name: String) -> Exercise? {
+    metadata.exercises.first { $0.name == name }
+  }
+  
+  func getNextPendingExercise() -> Exercise? {
+    for exercise in metadata.exercises {
+      if !progressTracker.isCompleted(exercise.name) {
+        return exercise
+      }
     }
-    
-    /// Get all exercises
-    var allExercises: [Exercise] {
-        metadata.exercises
+    return nil
+  }
+  
+  func getExercises(completed: Bool? = nil) -> [Exercise] {
+    if let completed = completed {
+      return metadata.exercises.filter { exercise in
+        progressTracker.isCompleted(exercise.name) == completed
+      }
     }
-    
-    /// Get all exercises (method version for compatibility)
-    func getAllExercises() -> [Exercise] {
-        metadata.exercises
+    return metadata.exercises
+  }
+  
+  func getPendingExercises() -> [Exercise] {
+    return getExercises(completed: false)
+  }
+  
+  func getExerciseStatus(_ exercise: Exercise) -> String {
+    progressTracker.isCompleted(exercise.name) ? "✅" : "❌"
+  }
+  
+  func isCompleted(_ exerciseName: String) -> Bool {
+    progressTracker.isCompleted(exerciseName)
+  }
+  
+  func markCompleted(_ exercise: Exercise) {
+    progressTracker.markCompleted(exercise.name)
+  }
+  
+  func getCurrentExercise() -> Exercise? {
+    if let currentName = progressTracker.getCurrentExercise() {
+      return getExercise(named: currentName)
     }
-    
-    /// Get exercise by name
-    func getExercise(named name: String) -> Exercise? {
-        metadata.exercises.first { $0.name == name }
-    }
-    
-    /// Get next pending exercise
-    func getNextPendingExercise() -> Exercise? {
-        for exercise in metadata.exercises {
-            if !progressTracker.isCompleted(exercise.name) {
-                return exercise
-            }
-        }
-        return nil
-    }
-    
-    /// Get exercises filtered by status
-    func getExercises(completed: Bool? = nil) -> [Exercise] {
-        if let completed = completed {
-            return metadata.exercises.filter { exercise in
-                progressTracker.isCompleted(exercise.name) == completed
-            }
-        }
-        return metadata.exercises
-    }
-    
-    /// Get pending (incomplete) exercises
-    func getPendingExercises() -> [Exercise] {
-        return getExercises(completed: false)
-    }
-    
-    /// Get exercise status
-    func getExerciseStatus(_ exercise: Exercise) -> String {
-        progressTracker.isCompleted(exercise.name) ? "✅" : "❌"
-    }
-    
-    /// Check if an exercise is completed
-    func isCompleted(_ exerciseName: String) -> Bool {
-        progressTracker.isCompleted(exerciseName)
-    }
-    
-    /// Mark exercise as completed
-    func markCompleted(_ exercise: Exercise) {
-        progressTracker.markCompleted(exercise.name)
-    }
-    
-    /// Get current exercise
-    func getCurrentExercise() -> Exercise? {
-        if let currentName = progressTracker.getCurrentExercise() {
-            return getExercise(named: currentName)
-        }
-        return getNextPendingExercise()
-    }
-    
-    /// Set current exercise
-    func setCurrentExercise(_ exercise: Exercise) {
-        progressTracker.setCurrentExercise(exercise.name)
-    }
-    
-    /// Get progress statistics
-    func getProgressStats() -> (completed: Int, total: Int, percentage: Double) {
-        let total = metadata.exercises.count
-        let stats = progressTracker.getStats(totalExercises: total)
-        return (stats.completed, total, stats.percentage)
-    }
-    
-    /// Get welcome message
-    var welcomeMessage: String {
-        metadata.welcomeMessage
-    }
-    
-    /// Get final message
-    var finalMessage: String {
-        metadata.finalMessage
-    }
+    return getNextPendingExercise()
+  }
+  
+  func setCurrentExercise(_ exercise: Exercise) {
+    progressTracker.setCurrentExercise(exercise.name)
+  }
+  
+  func getProgressStats() -> (completed: Int, total: Int, percentage: Double) {
+    let total = metadata.exercises.count
+    let stats = progressTracker.getStats(totalExercises: total)
+    return (stats.completed, total, stats.percentage)
+  }
+  
+  var welcomeMessage: String {
+    metadata.welcomeMessage
+  }
+  
+  var finalMessage: String {
+    metadata.finalMessage
+  }
 }

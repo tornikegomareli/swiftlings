@@ -31,23 +31,19 @@ class ExerciseRunner {
   /// Run the exercise
   func run() throws -> ExerciseResult {
 
-    // Create a temporary directory for compilation
     let tempDir = FileManager.default.temporaryDirectory
       .appendingPathComponent("swiftlings-\(UUID().uuidString)")
     try fileManager.createDirectory(at: tempDir, withIntermediateDirectories: true)
 
     defer {
-      // Clean up temporary directory
       try? fileManager.removeItem(at: tempDir)
     }
 
-    // Copy exercise file to temp directory
     let tempFile = tempDir.appendingPathComponent("\(exercise.name).swift")
     let sourceFile = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
       .appendingPathComponent(exercise.filePath)
     try fileManager.copyItem(at: sourceFile, to: tempFile)
 
-    // Copy Assert.swift to temp directory if exercise uses test approach
     let usesTests = usesTestApproach()
     if usesTests {
       let assertSourcePath = URL(fileURLWithPath: FileManager.default.currentDirectoryPath)
@@ -59,7 +55,6 @@ class ExerciseRunner {
       }
     }
     
-    // Create a main.swift that calls the exercise
     let mainFile = tempDir.appendingPathComponent("main.swift")
     let mainContent = """
       // Call the main function from the exercise
@@ -68,7 +63,6 @@ class ExerciseRunner {
     try mainContent.write(to: mainFile, atomically: true, encoding: .utf8)
 
     do {
-      // Use Process instead of shellOut to capture stderr
       let process = Process()
       process.currentDirectoryURL = tempDir
       process.executableURL = URL(fileURLWithPath: "/usr/bin/swiftc")
@@ -102,7 +96,6 @@ class ExerciseRunner {
         Terminal.info("Compiler output: \(compileOutput)")
       }
 
-      // Run the compiled exercise
       Terminal.progress("Running \(exercise.name)...")
 
       let runProcess = Process()
@@ -123,18 +116,14 @@ class ExerciseRunner {
       let runOutput = String(data: runOutputData, encoding: .utf8) ?? ""
       let runError = String(data: runErrorData, encoding: .utf8) ?? ""
 
-      // For test-based exercises, check the exit code and output
       if usesTests {
         if runProcess.terminationStatus != 0 {
-          // Test failure - tests didn't pass
           let combinedOutput = runOutput + (runError.isEmpty ? "" : "\n\(runError)")
           return .testFailure(message: combinedOutput)
         } else {
-          // Tests passed
           return .success(output: runOutput)
         }
       } else {
-        // For non-test exercises, any non-zero exit code is a failure
         if runProcess.terminationStatus != 0 {
           let errorMessage =
             runError.isEmpty
@@ -150,7 +139,6 @@ class ExerciseRunner {
   }
 }
 
-/// Result of running an exercise
 enum ExerciseResult {
   case success(output: String)
   case compilationError(message: String)

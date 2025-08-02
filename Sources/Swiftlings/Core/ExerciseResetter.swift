@@ -1,5 +1,8 @@
 import Foundation
 
+
+// TODO: REFACTOR!!
+
 /// Handles resetting exercises to their original broken state
 class ExerciseResetter {
     private let fileManager = FileManager.default
@@ -13,10 +16,10 @@ class ExerciseResetter {
             throw ResetError.fileNotFound(exercise.filePath)
         }
         
-        // Apply the breaking changes based on exercise name
+        /// Apply the breaking changes based on exercise name
         content = breakExercise(exercise.name, content: content)
         
-        // Write back to file
+        /// Write back to file
         try content.write(to: fullPath, atomically: true, encoding: .utf8)
     }
     
