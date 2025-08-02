@@ -112,7 +112,7 @@ struct WatchCommand: ParsableCommand {
               switch input {
                 case "h":
                   Terminal.clear()
-                  Terminal.info("💡 Hint for \(currentExercise.name):")
+                  Terminal.info("Hint for \(currentExercise.name):")
                   print("\n\(currentExercise.hint)\n")
                   print("Press any key to continue...")
                   fflush(stdout)
