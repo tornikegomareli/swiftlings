@@ -44,8 +44,8 @@
 ### Watch Command
 - [x] Research and integrate file watching library
 - [x] Implement watch mode base functionality
-- [ ] Add keyboard input handling
-- [ ] Create interactive menu system
+- [x] Add keyboard input handling (raw mode - no Enter required)
+- [x] Create interactive menu system
 - [x] Implement auto-run on file change
 - [x] Add clear screen functionality
 - [ ] Handle multiple file changes
@@ -234,4 +234,37 @@
 - ✅ FileWatcher utility for watch mode
 - ✅ Compilation in isolated temp directories
 - ✅ Removed Solutions directory (encouraging self-learning)
+
+### Day 2 - Updates
+
+#### Raw Terminal Input
+- ✅ Implemented RawTerminalInput class for immediate key response
+- ✅ No Enter key required for commands (just like Rustlings)
+- ✅ Proper terminal state restoration on exit
+- ✅ Support for single character commands: h, l, n, c, x, q
+
+#### Exercise Reset System
+- ✅ Analyzed Rustlings reset implementation
+- ✅ Simplified ExerciseResetter to use Git (like Rustlings for third-party exercises)
+- ✅ Removed complex caching system in favor of simple git checkout
+- ✅ Clean and maintainable implementation following KISS principle
+
+### Major Refactoring
+
+#### Code Quality Improvements
+- ✅ Created unified ProcessRunner utility for consistent process execution
+- ✅ Consolidated Terminal color handling and removed duplication
+- ✅ Split ExerciseRunner responsibilities (SRP) into:
+  - ExerciseCompiler - handles compilation
+  - ExerciseExecutor - handles execution
+  - TestDetector - detects test approach
+- ✅ Implemented dependency injection for better testability
+- ✅ Created proper error type hierarchy (SwiftlingsError)
+- ✅ Extracted configuration constants to centralized Configuration enum
+
+#### Architecture Improvements
+- ✅ Reduced coupling between components
+- ✅ Made components testable with protocols and DI
+- ✅ Followed SOLID principles in refactoring
+- ✅ Removed primitive obsession with proper types
 
