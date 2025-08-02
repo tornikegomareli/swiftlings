@@ -74,9 +74,9 @@ struct SwiftlingsUI {
   
   private func renderHeader(currentExercise: Exercise, showError: Bool) {
     if showError {
-      print("\(Terminal.colored("⚠️  Exercise failed", color: .red))")
+      Terminal.error("Exercise failed")
     } else {
-      print("\(Terminal.colored("✓ Exercise done", color: .green))")
+      Terminal.success("Exercise done")
       print("When done experimenting, enter `n` to move on to the next exercise 🎉")
     }
     print("")
@@ -84,7 +84,7 @@ struct SwiftlingsUI {
   
   private func renderProgressBar() {
     let stats = manager.getProgressStats()
-    let progressBar = ProgressBar(completed: stats.completed, total: stats.total, width: 120)
+    let progressBar = ProgressBar(completed: stats.completed, total: stats.total, width: Configuration.UI.progressBarWidth)
     
     print(progressBar.formattedProgress())
     print("Current exercise: \(Terminal.colored(manager.getCurrentExercise()?.filePath ?? "", color: .cyan))")
@@ -119,26 +119,5 @@ struct SwiftlingsUI {
   
   private func renderCommandsFooter() {
     print("n:next / h:hint / l:list / c:check all / x:reset / q:quit")
-  }
-}
-
-extension Terminal {
-  static func colored(_ text: String, color: Color) -> String {
-    switch color {
-    case .blue:
-      return "\u{001B}[34m\(text)\u{001B}[0m"
-    case .cyan:
-      return "\u{001B}[36m\(text)\u{001B}[0m"
-    case .green:
-      return "\u{001B}[32m\(text)\u{001B}[0m"
-    case .red:
-      return "\u{001B}[31m\(text)\u{001B}[0m"
-    case .yellow:
-      return "\u{001B}[33m\(text)\u{001B}[0m"
-    }
-  }
-  
-  enum Color {
-    case blue, cyan, green, red, yellow
   }
 }

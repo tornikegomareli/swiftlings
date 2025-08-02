@@ -4,10 +4,14 @@ import Foundation
 class ExerciseManager {
   private let metadata: ExerciseMetadata
   private let progressTracker: ProgressTracker
+  private let exerciseResetter: ExerciseResetter
   
   init() throws {
     self.metadata = try ExerciseMetadata.load()
     self.progressTracker = ProgressTracker()
+    
+    // Initialize resetter
+    self.exerciseResetter = ExerciseResetter()
   }
   
   var allExercises: [Exercise] {
@@ -79,5 +83,15 @@ class ExerciseManager {
   
   var finalMessage: String {
     metadata.finalMessage
+  }
+  
+  /// Reset an exercise to its original broken state
+  func resetExercise(_ exercise: Exercise) throws {
+    try exerciseResetter.resetExercise(exercise)
+  }
+  
+  /// Reset all progress
+  func resetAllProgress() {
+    progressTracker.resetProgress()
   }
 }

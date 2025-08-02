@@ -20,9 +20,7 @@ struct ResetCommand: ParsableCommand {
   var force = false
   
   func run() throws {
-    let metadata = try ExerciseMetadata.load()
-    let progressTracker = ProgressTracker()
-    let resetter = ExerciseResetter()
+    let manager = try ExerciseManager()
     
     // Determine what to reset
     let resetExercises = all || exercise != nil
@@ -49,18 +47,20 @@ struct ResetCommand: ParsableCommand {
     if resetExercises && !progressOnly {
       if let exerciseName = exercise {
         // Reset single exercise
-        guard let exerciseToReset = metadata.exercises.first(where: { $0.name == exerciseName }) else {
+        guard let exerciseToReset = manager.getExercise(named: exerciseName) else {
           Terminal.error("Exercise '\(exerciseName)' not found")
           throw ExitCode.failure
         }
         
         Terminal.progress("Resetting exercise: \(exerciseName)...")
-        try resetter.resetExercise(exerciseToReset)
+        try manager.resetExercise(exerciseToReset)
         Terminal.success("Exercise '\(exerciseName)' reset to original state")
       } else if all {
         // Reset all exercises
         Terminal.progress("Resetting all exercises...")
-        try resetter.resetAllExercises(metadata.exercises)
+        for exercise in manager.getAllExercises() {
+          try manager.resetExercise(exercise)
+        }
         Terminal.success("All exercises reset to original state")
       }
     }
@@ -68,7 +68,7 @@ struct ResetCommand: ParsableCommand {
     // Reset progress
     if resetProgress {
       Terminal.progress("Resetting progress...")
-      progressTracker.resetProgress()
+      manager.resetAllProgress()
       Terminal.success("Progress reset")
     }
     

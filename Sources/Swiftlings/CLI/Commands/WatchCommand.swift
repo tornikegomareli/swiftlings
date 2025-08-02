@@ -148,7 +148,7 @@ struct WatchCommand: ParsableCommand {
                   Terminal.info("Moving to next exercise...")
                   switchToNextExercise()
                 } else {
-                  Terminal.warning("⚠️ Complete the current exercise first")
+                  Terminal.warning("Complete the current exercise first")
                   Thread.sleep(forTimeInterval: 1.5)
                   runCurrentExercise()
                 }
@@ -192,9 +192,8 @@ struct WatchCommand: ParsableCommand {
                 
               case "x":
                 Terminal.info("Resetting \(currentExercise.name)...")
-                let resetter = ExerciseResetter()
                 do {
-                  try resetter.resetExercise(currentExercise)
+                  try manager.resetExercise(currentExercise)
                   Terminal.success("Exercise reset!")
                   Thread.sleep(forTimeInterval: 1)
                   runCurrentExercise()
