@@ -50,7 +50,6 @@ struct ProgressBar {
 
 struct SwiftlingsUI {
   private let manager: ExerciseManager
-  private let terminal = Terminal()
 
   init(manager: ExerciseManager) {
     self.manager = manager
