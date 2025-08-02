@@ -3,13 +3,13 @@ import Foundation
 /// Root structure for the exercise metadata JSON file
 struct ExerciseMetadata: Codable {
   let formatVersion: Int
-  
+
   let welcomeMessage: String
-  
+
   let finalMessage: String
-  
+
   let exercises: [Exercise]
-  
+
   private enum CodingKeys: String, CodingKey {
     case formatVersion = "format_version"
     case welcomeMessage = "welcome_message"
