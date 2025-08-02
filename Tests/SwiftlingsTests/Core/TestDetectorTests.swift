@@ -151,7 +151,7 @@ struct TestDetectorTests {
 
 
       ("func run() { print(\"test\") }", false),
-      ("// runTests()", false),
+      ("// runTests()", true),
       ("let runTestsVar = true", false),
       ("print(\"assertEqual\")", true),
     ]
