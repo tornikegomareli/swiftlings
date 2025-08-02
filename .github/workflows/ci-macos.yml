@@ -44,7 +44,7 @@ jobs:
       run: ./run-swift-test.sh
       
     - name: Upload artifacts
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: matrix.swift == '5.9'
       with:
         name: swiftlings-macos
