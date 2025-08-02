@@ -43,3 +43,6 @@ rustlings/
 
 # Claude configuration
 .claude/
+
+# Dependencies
+.deps/
