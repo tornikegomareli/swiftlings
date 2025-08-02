@@ -12,7 +12,7 @@ jobs:
     runs-on: macos-latest
     strategy:
       matrix:
-        swift: ['5.10']
+        swift: ['6.0']
     
     steps:
     - name: Checkout code
@@ -27,7 +27,7 @@ jobs:
       run: swift --version
         
     - name: Cache Swift packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: .build
         key: ${{ runner.os }}-spm-${{ hashFiles('**/Package.resolved') }}
@@ -45,7 +45,7 @@ jobs:
       
     - name: Upload artifacts
       uses: actions/upload-artifact@v4
-      if: matrix.swift == '5.10'
+      if: matrix.swift == '6.0'
       with:
         name: swiftlings-macos
         path: .build/release/swiftlings
