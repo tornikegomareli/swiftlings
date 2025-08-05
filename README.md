@@ -10,7 +10,7 @@ Swiftlings is an interactive learning tool for Swift, inspired by Rustlings. It 
 
 ### ⚠️ Early Development Notice
 
-**This project is in very early development.** While it has been tested and works well on macOS, it still requires proper testing and validation on Windows and Linux platforms. Features may change, and you might encounter bugs. Please report any issues you find!
+**This project is in very early development.** While it has been tested and works well on macOS, it still requires proper testing and validation on Windows and Linux platforms.
 
 ## Installation
 
