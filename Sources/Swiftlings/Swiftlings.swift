@@ -6,6 +6,7 @@ public struct Swiftlings: ParsableCommand {
     abstract: "A Swift learning tool inspired by Rustlings",
     version: "0.1.0",
     subcommands: [
+      InitCommand.self,
       RunCommand.self,
       HintCommand.self,
       ListCommand.self,
