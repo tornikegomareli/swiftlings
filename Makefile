@@ -1,4 +1,4 @@
-.PHONY: all build build-debug build-release test format clean install help
+.PHONY: all build build-debug build-release test format clean help
 
 # Default target
 all: build
@@ -27,12 +27,6 @@ clean:
 	@rm -rf .build
 	@echo "✅ Clean complete!"
 
-# Install release build
-install: build-release
-	@echo "📦 Installing swiftlings..."
-	@cp .build/release/swiftlings /usr/local/bin/
-	@echo "✅ Installation complete! Run 'swiftlings' from anywhere."
-
 # Help
 help:
 	@echo "Swiftlings Makefile"
@@ -44,5 +38,4 @@ help:
 	@echo "  make test          - Run tests"
 	@echo "  make format        - Format code with SwiftFormat and SwiftLint"
 	@echo "  make clean         - Clean build artifacts"
-	@echo "  make install       - Build and install release version"
 	@echo "  make help          - Show this help message"
