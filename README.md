@@ -1,5 +1,11 @@
 ## Overview 🦉
 
+<div align="center">
+
+https://github.com/user-attachments/assets/20aa3330-1016-45de-841c-13adc1c3ffa4
+
+</div>
+
 Swiftlings is an interactive learning tool for Swift, inspired by Rustlings. It provides a structured path through Swift programming concepts. Each exercise is a small, focused problem designed to teach specific Swift features through hands-on practice.
 
 ### ⚠️ Early Development Notice
