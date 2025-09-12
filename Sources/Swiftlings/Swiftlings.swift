@@ -12,6 +12,7 @@ public struct Swiftlings: ParsableCommand {
       ListCommand.self,
       ResetCommand.self,
       WatchCommand.self,
+      DSACommand.self,
     ],
     defaultSubcommand: WatchCommand.self
   )
