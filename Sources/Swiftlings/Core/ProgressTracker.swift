@@ -93,4 +93,11 @@ class ProgressTracker {
     state = ProgressState()
     saveState()
   }
+  
+  /// Reset a specific exercise
+  func resetExercise(_ exerciseName: String) {
+    state.completedExercises.remove(exerciseName)
+    state.lastUpdated = Date()
+    saveState()
+  }
 }
