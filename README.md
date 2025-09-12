@@ -97,6 +97,18 @@ swiftlings reset variables1
 
 Restores an exercise to its original state.
 
+### Data Structures & Algorithms Mode (NEW!)
+
+Start the DSA learning mode to master data structures through implementation:
+
+```bash
+swiftlings dsa
+```
+
+Currently includes Queue exercises (6 progressive exercises building a FIFO data structure from scratch). New data structures and algorithms are coming soon! 
+
+I'm open to PRs for improving existing DSA exercises or adding new data structures and algorithms.
+
 ## Exercise Structure
 
 Exercises are organized into 19 progressive categories:
