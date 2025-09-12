@@ -5,6 +5,9 @@ class ExerciseManager {
   private let metadata: ExerciseMetadata
   private let progressTracker: ProgressTracker
   private let exerciseResetter: ExerciseResetter
+  
+  /// Optional category filter to restrict exercises to specific directories
+  var categoryFilter: String?
 
   init() throws {
     self.metadata = try ExerciseMetadata.load()
@@ -12,22 +15,35 @@ class ExerciseManager {
 
     // Initialize resetter
     self.exerciseResetter = ExerciseResetter()
+    
+    /// Check for category filter from environment
+    if let filter = ProcessInfo.processInfo.environment["SWIFTLINGS_CATEGORY_FILTER"] {
+      self.categoryFilter = filter
+    }
+  }
+  
+  /// Returns filtered exercises based on categoryFilter if set
+  private var filteredExercises: [Exercise] {
+    if let filter = categoryFilter {
+      return metadata.exercises.filter { $0.dir == filter }
+    }
+    return metadata.exercises
   }
 
   var allExercises: [Exercise] {
-    metadata.exercises
+    filteredExercises
   }
 
   func getAllExercises() -> [Exercise] {
-    metadata.exercises
+    filteredExercises
   }
 
   func getExercise(named name: String) -> Exercise? {
-    metadata.exercises.first { $0.name == name }
+    filteredExercises.first { $0.name == name }
   }
 
   func getNextPendingExercise() -> Exercise? {
-    for exercise in metadata.exercises {
+    for exercise in filteredExercises {
       if !progressTracker.isCompleted(exercise.name) {
         return exercise
       }
@@ -37,11 +53,11 @@ class ExerciseManager {
 
   func getExercises(completed: Bool? = nil) -> [Exercise] {
     if let completed = completed {
-      return metadata.exercises.filter { exercise in
+      return filteredExercises.filter { exercise in
         progressTracker.isCompleted(exercise.name) == completed
       }
     }
-    return metadata.exercises
+    return filteredExercises
   }
 
   func getPendingExercises() -> [Exercise] {
@@ -72,9 +88,11 @@ class ExerciseManager {
   }
 
   func getProgressStats() -> (completed: Int, total: Int, percentage: Double) {
-    let total = metadata.exercises.count
-    let stats = progressTracker.getStats(totalExercises: total)
-    return (stats.completed, total, stats.percentage)
+    let exercises = filteredExercises
+    let total = exercises.count
+    let completed = exercises.filter { progressTracker.isCompleted($0.name) }.count
+    let percentage = total > 0 ? Double(completed) / Double(total) * 100 : 0
+    return (completed, total, percentage)
   }
 
   var welcomeMessage: String {
@@ -93,5 +111,26 @@ class ExerciseManager {
   /// Reset all progress
   func resetAllProgress() {
     progressTracker.resetProgress()
+  }
+  
+  /// Reset progress for DSA exercises (current category filter)
+  func resetDSAProgress() {
+    if let filter = categoryFilter {
+      /// Reset progress for all exercises in the filtered category
+      let dsaExercises = metadata.exercises.filter { $0.dir == filter }
+      for exercise in dsaExercises {
+        progressTracker.resetExercise(exercise.name)
+        /// Also reset the actual exercise files
+        do {
+          try exerciseResetter.resetExercise(exercise)
+        } catch {
+          print("Failed to reset exercise \(exercise.name): \(error)")
+        }
+      }
+      /// Set current exercise to the first one in the category
+      if let firstExercise = filteredExercises.first {
+        setCurrentExercise(firstExercise)
+      }
+    }
   }
 }

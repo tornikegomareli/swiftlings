@@ -191,16 +191,35 @@ struct WatchCommand: ParsableCommand {
                   runCurrentExercise()
 
                 case "x":
-                  Terminal.info("Resetting \(currentExercise.name)...")
-                  do {
-                    try manager.resetExercise(currentExercise)
-                    Terminal.success("Exercise reset!")
-                    Thread.sleep(forTimeInterval: 1)
-                    runCurrentExercise()
-                  } catch {
-                    Terminal.error("Failed to reset: \(error)")
-                    Thread.sleep(forTimeInterval: 2)
-                    runCurrentExercise()
+                  /// Check if we're in DSA mode
+                  if manager.categoryFilter != nil {
+                    print("⚠️  Reset all DSA exercises? (y/n): ", terminator: "")
+                    fflush(stdout)
+                    if let confirm = rawInput.readKey()?.lowercased(), confirm == "y" {
+                      Terminal.info("Resetting all DSA exercises...")
+                      manager.resetDSAProgress()
+                      Terminal.success("All DSA exercises reset!")
+                      Thread.sleep(forTimeInterval: 1)
+                      /// Reset to first exercise
+                      if let firstExercise = manager.getAllExercises().first {
+                        currentExercise = firstExercise
+                        runCurrentExercise()
+                      }
+                    } else {
+                      runCurrentExercise()
+                    }
+                  } else {
+                    Terminal.info("Resetting \(currentExercise.name)...")
+                    do {
+                      try manager.resetExercise(currentExercise)
+                      Terminal.success("Exercise reset!")
+                      Thread.sleep(forTimeInterval: 1)
+                      runCurrentExercise()
+                    } catch {
+                      Terminal.error("Failed to reset: \(error)")
+                      Thread.sleep(forTimeInterval: 2)
+                      runCurrentExercise()
+                    }
                   }
 
                 case "q":

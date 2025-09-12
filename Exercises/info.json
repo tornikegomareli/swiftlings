@@ -442,6 +442,36 @@
       "name": "codable4",
       "dir": "18_codable",
       "hint": "Optimize for performance with lazy decoding. Handle streaming JSON. Implement differential encoding."
+    },
+    {
+      "name": "queue1",
+      "dir": "20_dsa_queue",
+      "hint": "A Queue needs storage. Use an array of Int and initialize it as empty: var elements: [Int] = []"
+    },
+    {
+      "name": "queue2",
+      "dir": "20_dsa_queue",
+      "hint": "Enqueue adds to the end. Use mutating func and elements.append(element)"
+    },
+    {
+      "name": "queue3",
+      "dir": "20_dsa_queue",
+      "hint": "Dequeue removes from front. Check isEmpty, then use removeFirst(). Return Int? for optional."
+    },
+    {
+      "name": "queue4",
+      "dir": "20_dsa_queue",
+      "hint": "Peek uses elements.first. isEmpty checks elements.isEmpty. Count returns elements.count"
+    },
+    {
+      "name": "queue5",
+      "dir": "20_dsa_queue",
+      "hint": "Add <Element> after Queue. Replace all Int with Element. The syntax is: struct Queue<Element>"
+    },
+    {
+      "name": "queue6",
+      "dir": "20_dsa_queue",
+      "hint": "For Collection: startIndex is 0, endIndex is elements.count, index(after:) returns i + 1, subscript returns elements[position]"
     }
   ]
 }
