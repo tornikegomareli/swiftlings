@@ -10,13 +10,8 @@ func getDayType(_ day: String) -> String {
     switch day {
     case "Monday", "Tuesday", "Wednesday", "Thursday", "Friday":
         // Add return statement
-        "Weekday"
     case "Saturday", "Sunday":
         // Add return statement
-        "Weekend"
-    default:
-        // Add return statement
-        "Invalid day"
     }
 }
 
