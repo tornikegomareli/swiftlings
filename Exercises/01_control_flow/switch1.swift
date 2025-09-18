@@ -12,6 +12,7 @@ func getDayType(_ day: String) -> String {
         // Add return statement
     case "Saturday", "Sunday":
         // Add return statement
+    default:
     }
 }
 
