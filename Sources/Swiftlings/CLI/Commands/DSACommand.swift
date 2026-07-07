@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import Rainbow
 
 struct DSACommand: ParsableCommand {
   static let configuration = CommandConfiguration(
@@ -11,8 +12,8 @@ struct DSACommand: ParsableCommand {
     let manager = try ExerciseManager()
     
     Terminal.clear()
-    print("Welcome to Swiftlings DSA Mode! 🎯")
-    print("=====================================")
+    print("Welcome to Swiftlings DSA Mode!".cyan.bold)
+    print(String(repeating: "─", count: 37).lightBlack)
     print("\nMaster Data Structures & Algorithms through hands-on implementation.\n")
     
     /// Get DSA exercises grouped by category
@@ -32,7 +33,7 @@ struct DSACommand: ParsableCommand {
       let completed = exercises.filter { manager.isCompleted($0.name) }.count
       let total = exercises.count
       
-      let progressBar = createProgressBar(completed: completed, total: total)
+      let progressBar = Box.progressBar(completed: completed, total: total, barWidth: 10)
       print("  \(index + 1). \(name) \(progressBar)")
       print("     \(description)")
       print("     \(total) exercises")
@@ -89,16 +90,5 @@ struct DSACommand: ParsableCommand {
     } else {
       Terminal.error("No exercises found for this data structure.")
     }
-  }
-  
-  private func createProgressBar(completed: Int, total: Int) -> String {
-    let percentage = total > 0 ? Double(completed) / Double(total) : 0
-    let filled = Int(percentage * 10)
-    let empty = 10 - filled
-    
-    let bar = String(repeating: "█", count: filled) + String(repeating: "░", count: empty)
-    let percentageText = String(format: "%.0f%%", percentage * 100)
-    
-    return "[\(bar)] \(percentageText) (\(completed)/\(total))"
   }
 }

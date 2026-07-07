@@ -1,4 +1,5 @@
 import Foundation
+import Rainbow
 
 /// Manages exercises and their metadata
 class ExerciseManager {
@@ -65,7 +66,7 @@ class ExerciseManager {
   }
 
   func getExerciseStatus(_ exercise: Exercise) -> String {
-    progressTracker.isCompleted(exercise.name) ? "✅" : "❌"
+    progressTracker.isCompleted(exercise.name) ? "✓".green : "○".lightBlack
   }
 
   func isCompleted(_ exerciseName: String) -> Bool {

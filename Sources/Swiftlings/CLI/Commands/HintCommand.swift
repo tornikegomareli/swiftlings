@@ -31,7 +31,7 @@ struct HintCommand: ParsableCommand {
 
       Terminal.info("Hint for '\(exerciseForHint.name)':")
       print("")
-      print("💡 \(exerciseForHint.hint)")
+      print(exerciseForHint.hint)
       print("")
 
     } catch {

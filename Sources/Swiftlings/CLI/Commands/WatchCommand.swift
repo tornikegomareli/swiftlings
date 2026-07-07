@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import Rainbow
 
 struct WatchCommand: ParsableCommand {
   static let configuration = CommandConfiguration(
@@ -25,7 +26,7 @@ struct WatchCommand: ParsableCommand {
 
       guard var currentExercise = manager.getCurrentExercise() else {
         Terminal.clear()
-        Terminal.success("🎉 Congratulations! You've completed all Swiftlings exercises!")
+        Terminal.success("Congratulations! You've completed all Swiftlings exercises!")
         print("\n\(manager.finalMessage)")
         return
       }
@@ -43,18 +44,20 @@ struct WatchCommand: ParsableCommand {
 
         let runner = ExerciseRunner(exercise: currentExercise)
         do {
+          let startedAt = Date()
           let result = try runner.run()
+          let elapsed = Date().timeIntervalSince(startedAt)
           lastResult = result
 
           switch result {
             case .success:
               manager.markCompleted(currentExercise)
 
-              ui.renderWatchMode(currentExercise: currentExercise, result: result, showError: false)
+              ui.renderWatchMode(currentExercise: currentExercise, result: result, showError: false, duration: elapsed)
 
               if manager.getNextPendingExercise() == nil {
                 print("\n")
-                Terminal.success("🎉 All exercises completed!")
+                Terminal.success("All exercises completed!")
                 print(manager.finalMessage)
                 watcher?.stop()
                 isRunning = false
@@ -62,7 +65,7 @@ struct WatchCommand: ParsableCommand {
               }
 
             case .compilationError, .testFailure:
-              ui.renderWatchMode(currentExercise: currentExercise, result: result, showError: true)
+              ui.renderWatchMode(currentExercise: currentExercise, result: result, showError: true, duration: elapsed)
           }
         } catch {
           Terminal.error("Failed to run exercise: \(error)")
@@ -73,7 +76,7 @@ struct WatchCommand: ParsableCommand {
         watcher?.stop()
 
         guard let nextExercise = manager.getNextPendingExercise() else {
-          Terminal.success("All exercises completed! 🎉")
+          Terminal.success("All exercises completed!")
           print(manager.finalMessage)
           isRunning = false
           return
@@ -112,9 +115,12 @@ struct WatchCommand: ParsableCommand {
               switch input {
                 case "h":
                   Terminal.clear()
-                  Terminal.info("Hint for \(currentExercise.name):")
-                  print("\n\(currentExercise.hint)\n")
-                  print("Press any key to continue...")
+                  print(Box.panel(
+                    label: "hint · \(currentExercise.name)",
+                    contentLines: [Box.line(currentExercise.hint.lightWhite)]
+                  ))
+                  print("")
+                  print("press any key to continue".lightBlack)
                   fflush(stdout)
                   _ = rawInput.readKey()
                   runCurrentExercise()
@@ -122,23 +128,23 @@ struct WatchCommand: ParsableCommand {
                 case "l":
                   Terminal.clear()
                   let stats = manager.getProgressStats()
-                  let progressBar = ProgressBar(completed: stats.completed, total: stats.total, width: 80)
 
-                  Terminal.info("Exercise List")
-                  print("\n\(progressBar.formattedProgress())\n")
+                  print("exercises".cyan.bold + "  " + Box.progressBar(completed: stats.completed, total: stats.total))
+                  print("")
 
                   // Show exercises grouped by directory
                   let exercisesByDir = Dictionary(grouping: manager.getAllExercises()) { $0.dir }
                   for (dir, exercises) in exercisesByDir.sorted(by: { $0.key < $1.key }) {
-                    print("\n[\(dir)]")
+                    print(dir.lightBlack.bold)
                     for exercise in exercises {
-                      let status = manager.isCompleted(exercise.name) ? "✓" : "○"
-                      let current = exercise.name == currentExercise.name ? " ← current" : ""
+                      let status = manager.isCompleted(exercise.name) ? "✓".green : "○".lightBlack
+                      let current = exercise.name == currentExercise.name ? " ← current".cyan : ""
                       print("  \(status) \(exercise.name)\(current)")
                     }
+                    print("")
                   }
 
-                  print("\nPress any key to continue...")
+                  print("press any key to continue".lightBlack)
                   fflush(stdout)
                   _ = rawInput.readKey()
                   runCurrentExercise()
@@ -155,7 +161,7 @@ struct WatchCommand: ParsableCommand {
 
                 case "c":
                   Terminal.clear()
-                  Terminal.info("🔍 Checking all exercises...")
+                  Terminal.progress("Checking all exercises...")
                   print("")
 
                   var failed = 0
@@ -165,23 +171,24 @@ struct WatchCommand: ParsableCommand {
                       let result = try runner.run()
                       switch result {
                         case .success:
-                          print("✅ \(exercise.name)")
+                          print("✓ \(exercise.name)".green)
                           manager.markCompleted(exercise)
                         case .compilationError:
-                          print("❌ \(exercise.name) - compilation error")
+                          print("✗ \(exercise.name) - compilation error".red)
                           failed += 1
                         case .testFailure:
-                          print("❌ \(exercise.name) - test failure")
+                          print("✗ \(exercise.name) - test failure".red)
                           failed += 1
                       }
                     } catch {
-                      print("❌ \(exercise.name) - error: \(error)")
+                      print("✗ \(exercise.name) - error: \(error)".red)
                       failed += 1
                     }
                   }
 
-                  print("\nSummary: \(failed) exercises need work")
-                  print("Press any key to continue...")
+                  print("")
+                  print("Summary: \(failed) exercises need work")
+                  print("press any key to continue".lightBlack)
                   fflush(stdout)
                   _ = rawInput.readKey()
 
@@ -193,7 +200,7 @@ struct WatchCommand: ParsableCommand {
                 case "x":
                   /// Check if we're in DSA mode
                   if manager.categoryFilter != nil {
-                    print("⚠️  Reset all DSA exercises? (y/n): ", terminator: "")
+                    print("Reset all DSA exercises? (y/n): ".yellow.bold, terminator: "")
                     fflush(stdout)
                     if let confirm = rawInput.readKey()?.lowercased(), confirm == "y" {
                       Terminal.info("Resetting all DSA exercises...")

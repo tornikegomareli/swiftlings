@@ -1,5 +1,6 @@
 import ArgumentParser
 import Foundation
+import Rainbow
 
 struct ListCommand: ParsableCommand {
   static let configuration = CommandConfiguration(
@@ -34,9 +35,7 @@ struct ListCommand: ParsableCommand {
       let stats = manager.getProgressStats()
 
       print("\n")
-      Terminal.info(
-        "Progress: \(stats.completed)/\(stats.total) (\(String(format: "%.1f", stats.percentage))%)"
-      )
+      print("Progress: " + Box.progressBar(completed: stats.completed, total: stats.total))
       print("\n")
 
       for exercise in exercises {

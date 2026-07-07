@@ -20,12 +20,12 @@ struct InitCommand: ParsableCommand {
     
     /// Check if directory already exists
     if fileManager.fileExists(atPath: projectPath) && !force {
-      print("❌ Directory '\(projectName)' already exists!")
-      print("💡 Use --force to overwrite or choose a different name with --project-name")
+      Terminal.error("Directory '\(projectName)' already exists!")
+      Terminal.info("Use --force to overwrite or choose a different name with --project-name")
       throw ExitCode.failure
     }
-    
-    print("🚀 Initializing Swiftlings project...")
+
+    Terminal.progress("Initializing Swiftlings project...")
     
     /// Remove existing directory if force flag is set
     if force && fileManager.fileExists(atPath: projectPath) {
@@ -45,18 +45,18 @@ struct InitCommand: ParsableCommand {
     )
     
     guard cloneResult.exitCode == 0 else {
-      print("❌ Failed to clone exercises repository")
+      Terminal.error("Failed to clone exercises repository")
       print("Error: \(cloneResult.stderr)")
       throw ExitCode.failure
     }
-    
+
     /// Remove .git directory to disconnect from the original repo
     let gitPath = "\(projectPath)/.git"
     if fileManager.fileExists(atPath: gitPath) {
       try fileManager.removeItem(atPath: gitPath)
     }
-    
-    print("✅ Successfully initialized Swiftlings project in '\(projectName)'!")
+
+    Terminal.success("Successfully initialized Swiftlings project in '\(projectName)'!")
     print("")
     print("To get started:")
     print("  cd \(projectName)")

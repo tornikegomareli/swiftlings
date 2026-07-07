@@ -10,27 +10,27 @@ enum TerminalColor {
 enum Terminal {
   /// Print success message in green
   static func success(_ message: String) {
-    print("✅ \(message)".green)
+    print("✓ \(message)".green.bold)
   }
 
   /// Print error message in red
   static func error(_ message: String) {
-    print("❌ \(message)".red)
+    print("✗ \(message)".red.bold)
   }
 
   /// Print warning message in yellow
   static func warning(_ message: String) {
-    print("⚠️  \(message)".yellow)
+    print("! \(message)".yellow.bold)
   }
 
-  /// Print info message in blue
+  /// Print info message in cyan
   static func info(_ message: String) {
-    print("ℹ️  \(message)".blue)
+    print(message.cyan)
   }
 
-  /// Print a progress message in cyan
+  /// Print a progress message in dim gray
   static func progress(_ message: String) {
-    print("🔄 \(message)".cyan)
+    print("… \(message)".lightBlack)
   }
 
   /// Clear the terminal screen

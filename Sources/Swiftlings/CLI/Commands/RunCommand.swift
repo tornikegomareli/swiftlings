@@ -24,7 +24,7 @@ struct RunCommand: ParsableCommand {
         exerciseToRun = ex
       } else {
         guard let ex = manager.getCurrentExercise() else {
-          Terminal.success("Congratulations! You've completed all exercises! 🎉")
+          Terminal.success("Congratulations! You've completed all exercises!")
           print("\n\(manager.finalMessage)")
           return
         }
@@ -55,7 +55,7 @@ struct RunCommand: ParsableCommand {
           if let nextExercise = manager.getNextPendingExercise() {
             Terminal.info("Next exercise: \(nextExercise.name)")
           } else {
-            Terminal.success("All exercises completed! 🎉")
+            Terminal.success("All exercises completed!")
           }
 
         case .compilationError(let message):

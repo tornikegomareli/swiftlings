@@ -132,7 +132,7 @@ public enum SwiftlingsAssert {
   /// Run all tests and print results
   public static func runTests() {
     if testResults.isEmpty {
-      print("⚠️  No tests were run!")
+      print("No tests were run!")
       exit(1)
     }
 
@@ -149,7 +149,7 @@ public enum SwiftlingsAssert {
 
     for (testName, results) in groupedResults {
       let testPassed = results.allSatisfy { $0.passed }
-      let icon = testPassed ? "✅" : "❌"
+      let icon = testPassed ? "✓" : "✗"
       print("\n\(icon) \(testName.isEmpty ? "Tests" : testName)")
 
       for result in results {
@@ -165,11 +165,11 @@ public enum SwiftlingsAssert {
     print("Summary: \(passedCount)/\(totalCount) assertions passed")
 
     if failedTests.isEmpty {
-      print("✅ All tests passed!")
+      print("✓ All tests passed!")
       print(String(repeating: "=", count: 50) + "\n")
       exit(0)
     } else {
-      print("❌ \(failedTests.count) assertion(s) failed")
+      print("✗ \(failedTests.count) assertion(s) failed")
       print(String(repeating: "=", count: 50) + "\n")
       exit(1)
     }
